@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 4.0.0 FATAL_ERROR)
-project("Azalealang" LANGUAGES C VERSION 1.0.0.2 DESCRIPTION "A small C-like language built for use in the Cobalt operating system.")
+project("Azalealang" LANGUAGES C VERSION 1.0.0.5 DESCRIPTION "A small C-like language built for use in the Cobalt operating system.")
 
 if(NOT UNIX OR APPLE)
     message(FATAL_ERROR "${PROJECT_NAME} does not support this operating system.")
@@ -27,7 +27,7 @@ string(FIND ${PROJECT_NAME} "lang" PROJECT_REALNAME_INDEX)
 string(SUBSTRING ${PROJECT_NAME} 0 ${PROJECT_REALNAME_INDEX} PROJECT_REALNAME)
 
 add_library(${PROJECT_REALNAME} "${CMAKE_SOURCE_DIR}/Source/Compiler.c" "${CMAKE_SOURCE_DIR}/Source/Utilities.c" "${CMAKE_SOURCE_DIR}/Source/Targets/Linux.c")
-add_executable(${PROJECT_REALNAME}C "${CMAKE_SOURCE_DIR}/CLI.c") 
+add_executable(${PROJECT_REALNAME}C "${CMAKE_SOURCE_DIR}/Source/Client.c") 
 
 add_dependencies(${PROJECT_REALNAME}C ${PROJECT_REALNAME})
 target_link_libraries(${PROJECT_REALNAME}C ${PROJECT_REALNAME})
