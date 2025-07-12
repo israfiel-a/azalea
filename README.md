@@ -1,3 +1,6 @@
+> [!WARNING]
+> This language, and its compiler, are under **very** early development. Changes should be expected, and should be expected to be frequent.
+
 ----------
 
 ### Azalealang
