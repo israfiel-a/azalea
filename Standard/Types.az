@@ -1,0 +1,32 @@
+//
+// @file Types.az
+// @purpose This file provides the basic data types beyond integrals for use
+// in Azalea programs.
+// @authors Israfil Argos
+//
+// @copyright 2025 Azalea Project
+// @license AGPLv3
+//
+
+<interface("std/types")> <noimplementation>
+
+// since language v1.0.0.1
+type byte_t char_t;
+
+// since language v1.0.0.1 
+uint8_t enum status_code_t {
+    SUCCESS(0):
+    FAILURE(255):
+};
+
+// since language v1.0.0.1
+structure command_line_args_t {
+    char_t[*] path; 
+    uint64_t count;
+    char_t[.count][*] args;
+};
+
+structure variable_arguments_t {
+    uint64_t count;
+    generic_t[.count] args;
+};

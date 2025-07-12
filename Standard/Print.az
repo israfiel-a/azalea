@@ -1,0 +1,21 @@
+//
+// @file Print.az
+// @purpose This file provides cross-platform data printing functionality. 
+// @authors Israfil Argos
+//
+// @copyright 2025 Azalea Project
+// @license AGPLv3
+//
+
+<interface("std/print")>
+
+import "std/types";
+import "std/strings";
+
+// print("hi") -> 'h' 'i' '\0'
+// print("hi", 2) -> 'h' 'i'
+// print("%s": "hii") -> 'h' 'i' 'i' '0'
+// print("%s", 2: "hello") -> 'h' 'e'
+
+fn uint64_t print(char_t[.size] string, uint64_t size = std::stringlength(.string), ...);
+

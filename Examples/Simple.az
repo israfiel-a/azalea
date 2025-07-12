@@ -1,0 +1,25 @@
+//
+// @file Simple.az
+// @purpose This file provides a rather simple example of a program that declares an
+// entrypoint, prints the execution path, and exits with success.
+// @authors Israfil Argos
+//
+// @copyright 2025 Azalea Project
+// @license AGPLv3
+//
+
+// Link the standard library statically; this only links the imported modules. The produced
+// executable will not have any dependencies besides those explicitly requested.
+<program:staticstd>
+
+import "std/types";
+import "std/print";
+
+fn status_code_t entry(command_line_args_t args)
+    <entrypoint(wrapped)> // "Wrapped" provides a wrapper function that grabs CMD args. "Bare" would not.
+{
+    std::print("Execution path: %s.\n": args.path);
+
+    return SUCCESS;
+}
+

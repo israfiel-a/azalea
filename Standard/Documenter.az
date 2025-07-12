@@ -1,0 +1,11 @@
+//
+// @file Documenter.az
+// @purpose This file provides the interface for the Azalea documentation parser.  
+// @authors Israfil Argos
+//
+// @copyright 2025 Azalea Project
+// @license AGPLv3
+//
+
+<interface("std/documenter")>
+
