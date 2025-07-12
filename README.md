@@ -1,9 +1,9 @@
-> [!WARNING]
-> This language, and its compiler, are under **very** early development. Changes should be expected, and should be expected to be frequent.
-
 ----------
 
 ### Azalealang
+> [!WARNING]
+> This language, and its compiler, are under **very** early development. Changes should be expected, and should be expected to be frequent.
+
 This is a small, C-like, low-level language built specifically for the development of the Cobalt operating system. This language is not and probably never will be fit for general usage, it's tailored exactly to my needs and my programming style. The compiler is also mostly implemented in inline assembly, because why not.
 
 ----------
