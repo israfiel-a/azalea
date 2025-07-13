@@ -11,9 +11,9 @@ ENTRY(main)
 
     char *inputNames[argc];
     size_t inputCount = 0;
-    compiler_digestArguments(argc, (const char**)argv, &inputCount, inputNames);
+    compiler_arguments(argc, argv, inputNames, &inputCount);
 
-    for(size_t i = 0; i < inputCount; i++) {
+    for(size_t i = 1; i < inputCount; i++) {
         utilities_outputString("Processing: ", false);
         utilities_outputString(inputNames[i], true);
 
@@ -27,7 +27,10 @@ ENTRY(main)
 
         char contents[size + 1];
         utilities_loadFile(inputNames[i], size, contents);
-        compiler_compileFile(inputNames[i], contents);
+        
+        size_t tokenCount = 0;
+        compiler_token_t tokens[tokenCount];
+        compiler_tokenize(contents, tokens, &tokenCount);
     }
 
     return 0;

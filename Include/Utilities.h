@@ -7,6 +7,8 @@
 
 bool utilities_stringEqual(const char* const a, const char* const b);
 
+bool utilities_stringEqualUntil(const char* const a, const char* const b, char until);
+
 // This actually edits the passed in string, replacing all delims with a NUL.
 void utilities_stringSplitLines(char* string, char** storage, size_t *count);
 

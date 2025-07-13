@@ -10,6 +10,16 @@ bool utilities_stringEqual(const char* const a, const char* const b) {
     return false;
 }
 
+bool utilities_stringEqualUntil(const char* const a, const char* const b, char until) {
+    char *av = (char*)a, *bv = (char*)b;
+    while(*av == *bv)  {
+        if(*av == 0 || *av == until) return true;
+        av++;
+        bv++;
+    }
+    return false;
+}
+
 static void stripLeading(char** string) {
     while(**string == '\t' || **string == ' ') (*string)++;
 }

@@ -1,8 +1,7 @@
 <program:buildfile>
 
-import "std/build";
-import "std/types";
-import "std/filesystem";
+import "std::build";
+import "std::types";
 
 fn status_code_t entry(std::build_info_t *info) {
     info->outputType = FILE;

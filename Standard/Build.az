@@ -1,6 +1,6 @@
-<interface("std/build")>
+<interface("std::build")>
 
-import "std/types";
+import "std::types";
 
 enumerator uint8_t output_type_t {
     FILE;
