@@ -12,7 +12,12 @@ struct compiler_ast_node_inner {
         ATTRIBUTE_DECLARATION,
         BLOCK_START,
         BLOCK_END,
-        VARIABLE_VALUE
+        VARIABLE_VALUE,
+        STRUCTURE_DECLARATION,
+        ENUMERATOR_DECLARATION,
+        TYPE_DECLARATION,
+        STRING_BEGIN,
+        STRING_END
     } type;
     size_t position;
     void *contents;
@@ -30,7 +35,7 @@ typedef struct compiler_ast {
 
 bool compiler_digestArguments(int argc, const char *const *const argv, size_t* inputCount, char** inputNames);
 
-bool compiler_validateInput(const char *const *const contents);
+bool compiler_validateInput(compiler_ast_t *contents);
 
 void compiler_constructAST(const char* const *const contents, size_t lines, compiler_ast_t *storage);
 

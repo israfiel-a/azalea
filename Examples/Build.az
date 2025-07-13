@@ -1,0 +1,17 @@
+<program:buildfile>
+
+import "std/build";
+import "std/types";
+import "std/filesystem";
+
+fn status_code_t entry(std::build_info_t *info) {
+    info->outputType = FILE;
+
+    info->inputCount = 1;
+    info->inputFiles = {
+        "Simple.az"
+    };
+
+    return SUCCESS;
+}
+

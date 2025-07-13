@@ -1,0 +1,6 @@
+<interface("std/strings")>
+
+import "std/types";
+
+fn uint64_t stringlength(std::char_t[*] string);
+

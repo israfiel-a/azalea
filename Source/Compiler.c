@@ -9,7 +9,7 @@ bool compiler_digestArguments(int argc, const char *const *const argv, size_t* i
     return true;
 }
 
-bool compiler_validateInput(const char *const *const contents) {
+bool compiler_validateInput(compiler_ast_t *contents) {
     (void)contents;
     return true;
 }
@@ -20,11 +20,10 @@ void compiler_constructAST(const char* const *const contents, size_t lines, comp
         char* currentTokenBegin = currentLetter;
         while(*currentLetter != 0 && *currentLetter != ' ') {
             if(*currentLetter == '/' && *(currentLetter + 1) == '/') { currentLetter--; break; }
-            *currentLetter++;
+            currentLetter++;
         }
-
-        
     }
+    (void)storage;
 }
 
 bool compiler_compileFile(const char *const name, char *contents) {
@@ -32,7 +31,10 @@ bool compiler_compileFile(const char *const name, char *contents) {
     char *lines[lineCount];
     utilities_stringSplitLines(contents, lines, &lineCount);
 
-    if(!compiler_validateInput((const char**)lines)) return false;
+    compiler_ast_t tree = {0};
+    compiler_constructAST((const char**)lines, lineCount, &tree);
+
+    if(!compiler_validateInput(&tree)) return false;
 
     (void)name;    
 

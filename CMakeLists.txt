@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 4.0.0 FATAL_ERROR)
-project("Azalealang" LANGUAGES C VERSION 1.0.0.9 DESCRIPTION "A small C-like language built for use in the Cobalt operating system.")
+project("Azalealang" LANGUAGES C VERSION 1.0.0.10 DESCRIPTION "A small C-like language built for use in the Cobalt operating system.")
 
 if(NOT UNIX OR APPLE)
     message(FATAL_ERROR "${PROJECT_NAME} does not support this operating system.")

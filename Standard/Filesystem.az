@@ -1,0 +1,10 @@
+<interface("std/filesystem")>
+
+import "std/types";
+
+structure file_information_t {
+
+};
+
+fn bool getFileInformation(std::char_t[*] name, file_information_t *info);
+

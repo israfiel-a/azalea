@@ -1,0 +1,17 @@
+<interface("std/build")>
+
+import "std/types";
+
+enumerator uint8_t output_type_t {
+    FILE;
+    EXECUTABLE;
+    ARCHIVE;
+    LIBRARY;
+}
+
+structure build_info_t {
+    std::char_t[.inputCount][*] inputFiles;
+    uint64_t inputCount;
+    output_type_t outputType;  
+};
+

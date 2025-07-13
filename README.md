@@ -32,3 +32,11 @@ cmake --build build --config $BUILD_TYPE --parallel 9 # Parallelization is not r
 ```
 
 ----------
+
+#### Versioning
+Azalea is versioned in a `major.minor.patch.tweak` system. Each "tweak" is a commit; something was changed. This rolls over when a "patch" is hit, being a fix to a certain bug or feature. These roll over ever "minor" version, which occur every time a new large feature is implemented. This only rolls over every "major" version, which are milestones decided by maintainers.
+
+> [!WARNING]
+> Until `v2.0.0.0`, this versioning system will be inconsistently followed. Breaking changes should be expected often.
+
+----------

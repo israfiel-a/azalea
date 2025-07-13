@@ -1,11 +1,11 @@
 <implementation("../Print.az")>
 
-fn uint64_t print(char_t[.size] string, uint64_t size = std::stringlength(.string), ...)
+fn uint64_t print(std::char_t[.size] string, uint64_t size = std::stringlength(.string), ...)
 {
-    char_t[.size] digestedString = string;
+    std::char_t[.size] digestedString = string;
 
     if(__provided_arg_count != 0) {
-        variable_arguments_t args = {
+        std::variable_arguments_t args = {
             count = __provided_arg_count;
             values = __provided_arg_values;
         };

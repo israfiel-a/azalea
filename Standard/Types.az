@@ -14,7 +14,7 @@
 type byte_t char_t;
 
 // since language v1.0.0.1 
-uint8_t enum status_code_t {
+enumerator uint8_t status_code_t {
     SUCCESS(0):
     FAILURE(255):
 };
