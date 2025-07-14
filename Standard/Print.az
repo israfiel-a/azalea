@@ -7,10 +7,10 @@
 // @license AGPLv3
 //
 
-<interface("std::print")>
+<interface(std::print)>
 
-import "std::types";
-import "std::strings";
+import std::types;
+import std::strings;
 
 // print("hi") -> 'h' 'i' '\0'
 // print("hi", 2) -> 'h' 'i'

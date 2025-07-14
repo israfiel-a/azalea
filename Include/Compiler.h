@@ -37,7 +37,9 @@ typedef union compiler_token_contents {
         } args;
     } attribute;
     struct {
-        char* location;
+        bool cascading;
+        char* interface;
+        char* alias;
     } import;
     struct {
         char* declaration;

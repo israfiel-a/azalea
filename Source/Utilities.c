@@ -57,6 +57,26 @@ size_t utilities_stringCountCharacters(const char *const string, char character)
     return count;
 }
 
+size_t utilities_stringFindCharacter(const char* const string, char character, bool front) {
+    char* stringCopy = (char*)string;
+    if(front) {
+        while(*stringCopy != 0 && *stringCopy != character) stringCopy++;
+        return stringCopy - string;
+    }
+
+    size_t length = 0;
+    while(*stringCopy != 0) {
+        stringCopy++;
+        length++;
+    }
+
+    while(*stringCopy != character && length > 0) {
+        stringCopy--;
+        length--;
+    }
+    return length;
+}
+
 size_t utilities_numberLength(size_t number) {
     if(number >= 100000) {
         if(number >= 10000000) {

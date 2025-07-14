@@ -1,0 +1,6 @@
+<interface(platforms::linux::constants)>
+<noimplementation>
+
+known int32_t stderr = 0;
+known int32_t stdout = 1;
+

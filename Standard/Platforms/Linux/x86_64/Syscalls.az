@@ -1,0 +1,6 @@
+<interface(platforms::linux::syscalls)>
+<noimplementation>
+
+known uint64_t read = 0;
+known uint64_t write = 1;
+

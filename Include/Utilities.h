@@ -16,6 +16,8 @@ size_t utilities_stringLength(const char* const string);
 
 size_t utilities_stringCountCharacters(const char *const string, char character);
 
+size_t utilities_stringFindCharacter(const char* const string, char character, bool front);
+
 size_t utilities_numberLength(size_t number);
 
 void utilities_numberToString(size_t number, size_t length, char* string);

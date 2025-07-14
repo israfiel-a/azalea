@@ -13,6 +13,21 @@ fn uint64_t print(std::char_t[.size] string, uint64_t size = std::stringlength(.
         // TODO: Implement parsing logic.
     }
 
-    // TODO: Implement output logic. 
+    <platform(linux-x86_64)>
+    
+    import platform::linux::syscalls as syscalls;
+    import platform::linux::constants as constants;
+
+    // Basically the same syntax as GNU inline assembly, plus the extra labels for
+    // readability.
+    uint64_t returnValue = 0;
+    assembly(
+        "syscall"
+        outputs: "=a"(returnValue)
+        inputs: "a"(syscalls::write), "D"(constants::stdout), "S"(string), "d"(stringLength)
+        clobbers: "rcx", "r11"
+    );
+
+    <endplatform>
 }
 

@@ -25,6 +25,19 @@ static void attributeToken(char* token, compiler_token_contents_t *contents) {
     }
 }
 
+static void importToken(char *declaration, compiler_token_contents_t *contents) {
+    if(utilities_stringEqualUntil(declaration+7, "cascading ", ' ')) contents->import.cascading = true;
+    else contents->import.cascading = false;
+
+    contents->import.interface = declaration + 7;
+    if(contents->import.cascading) contents->import.interface = declaration + 17;
+
+    size_t lastSpace = utilities_stringFindCharacter(declaration, ' ', false);
+    if(*(declaration + lastSpace - 2) != 'a' && *(declaration + lastSpace - 1) != 's') return;
+    *(declaration + lastSpace - 3) = 0;
+    contents->import.alias = declaration + lastSpace + 1;
+}
+
 static void tokenizeLine(char *line, compiler_token_t *tokens, size_t *tokenCount) {
     char* cursor = line;
 
@@ -32,8 +45,9 @@ static void tokenizeLine(char *line, compiler_token_t *tokens, size_t *tokenCoun
         char* token = cursor;
         while(*cursor != 0 && *cursor != ' ' && *cursor != ';') cursor++;
         
-        bool eol = false;
+        bool eol = false, eos = false;
         if(*cursor == 0) eol = true;
+        else if (*cursor == ';') eos = true;
         *cursor = 0;
 
         utilities_outputString(token, true);
@@ -44,6 +58,24 @@ static void tokenizeLine(char *line, compiler_token_t *tokens, size_t *tokenCoun
         if(token[0] == '<') {
             type = ATTRIBUTE_TOKEN;
             attributeToken(token, &contents);
+        } else if(utilities_stringEqual(token, "import")) {
+            type = IMPORT_TOKEN;
+            if(eos) {
+                contents.import.cascading = false;
+                contents.import.interface = nullptr;
+                contents.import.alias = nullptr;
+            } else {
+                // go until semicolon or eol
+                *cursor = ' ';
+                while(*cursor != 0 && *cursor != ';') cursor++;
+                
+                if(*cursor == 0) eol = true;
+                else if (*cursor == ';') eos = true;
+                *cursor = 0;
+
+                importToken(token, &contents);
+                
+            }
         }
         
         tokens[*tokenCount] = (compiler_token_t){
@@ -52,9 +84,6 @@ static void tokenizeLine(char *line, compiler_token_t *tokens, size_t *tokenCoun
 
         if(!eol) cursor++;
     }
-    
-    (void)tokens;
-    (void)tokenCount;
 }
 
 void compiler_tokenize(char *contents, compiler_token_t *tokens, size_t *tokenCount) 
