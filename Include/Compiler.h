@@ -42,7 +42,11 @@ typedef union compiler_token_contents {
         char* alias;
     } import;
     struct {
-        char* declaration;
+        char* returnType;
+        char* name;
+        size_t argumentCount;
+        char* argumentString; // split by comma, maybe " "
+        bool variadic;
     } function;
 } compiler_token_contents_t;
 

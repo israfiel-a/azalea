@@ -38,6 +38,46 @@ static void importToken(char *declaration, compiler_token_contents_t *contents) 
     contents->import.alias = declaration + lastSpace + 1;
 }
 
+static void functionDeclarationToken(char* declaration, compiler_token_contents_t *contents) {
+    declaration += 3;
+    contents->function.returnType = declaration;
+    while(*declaration != ' ') declaration++;
+    *declaration = 0;
+    declaration++;
+
+    contents->function.name = declaration;
+    while(*declaration != ' ' && *declaration != '(') declaration++;
+    
+    bool argumentList = false;
+    if(*declaration == '(') argumentList = true;
+    *declaration = 0;
+    declaration++;
+
+    if(!argumentList) {
+        contents->function.argumentCount = 0;
+        contents->function.argumentString = nullptr;
+        contents->function.variadic = false;
+        return;
+    }
+
+    contents->function.argumentString = declaration;
+    while(*declaration != ')') {
+        declaration++;
+        contents->function.argumentCount++;
+    }
+    *declaration = 0;
+    declaration++;
+}
+
+static void moveCursorUntilEOS(char **cursor, bool *eol, bool *eos) {
+    **cursor = ' ';
+    while(**cursor != 0 && **cursor != ';') (*cursor)++;
+    
+    if(**cursor == 0) *eol = true;
+    else if (**cursor == ';') *eos = true;
+    **cursor = 0;
+}
+
 static void tokenizeLine(char *line, compiler_token_t *tokens, size_t *tokenCount) {
     char* cursor = line;
 
@@ -60,21 +100,20 @@ static void tokenizeLine(char *line, compiler_token_t *tokens, size_t *tokenCoun
             attributeToken(token, &contents);
         } else if(utilities_stringEqual(token, "import")) {
             type = IMPORT_TOKEN;
-            if(eos) {
-                contents.import.cascading = false;
+            if(eos)
                 contents.import.interface = nullptr;
-                contents.import.alias = nullptr;
-            } else {
-                // go until semicolon or eol
-                *cursor = ' ';
-                while(*cursor != 0 && *cursor != ';') cursor++;
-                
-                if(*cursor == 0) eol = true;
-                else if (*cursor == ';') eos = true;
-                *cursor = 0;
-
+            else {
+                moveCursorUntilEOS(&cursor, &eol, &eos);
                 importToken(token, &contents);
-                
+            }
+        } 
+        else if(utilities_stringEqual(token, "fn")) {
+            type = FUNCTION_DECLARATION_TOKEN;
+            if(eos) {
+                contents.function.name = nullptr;
+            } else {
+                moveCursorUntilEOS(&cursor, &eol, &eos);
+                functionDeclarationToken(token, &contents);
             }
         }
         
