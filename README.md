@@ -41,3 +41,11 @@ Azalea is versioned in a `major.minor.patch.tweak` system. Each "tweak" is a com
 > Until `v2.0.0.0`, this versioning system will be inconsistently followed. Breaking changes should be expected often.
 
 ----------
+
+#### Roadmap
+- [x] Loader
+- [ ] Tokenizer
+- [ ] Analyzer
+- [ ] Compiler
+
+----------
