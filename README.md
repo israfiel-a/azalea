@@ -9,7 +9,7 @@ This is a small, C-like, low-level language built specifically for the developme
 ----------
 
 #### Compatibility
-Azalea will only ever have targets for x86_64, that's its usecase. It compiles directly to x86_64 assembly. A list of the targets that are (planned) is below.
+Azalea will only ever have targets for x86_64, that's its usecase. It compiles directly to x86_64 assemblies of different varieties (NASM, FASM, etc.). A list of the targets that are (planned) is below.
 
 - Linux: **Supported.**
 - Cobalt: **In progress.**
