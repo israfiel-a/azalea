@@ -15,10 +15,9 @@
 import std::types;
 import std::print;
 
-fn status_code_t entry
+fn status_code_t entry -> SUCCESS
     <entrypoint(bare)> // "Wrapped" provides a wrapper function that grabs CMD args. "Bare" does not.
 {
     std::print("Hello, world!");
-    return SUCCESS;
 }
 

@@ -47,6 +47,7 @@ typedef union compiler_token_contents {
         size_t argumentCount;
         char* argumentString; // split by comma, maybe " "
         bool variadic;
+        char* defaultReturn;
     } function;
 } compiler_token_contents_t;
 

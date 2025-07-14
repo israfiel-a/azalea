@@ -57,16 +57,25 @@ static void functionDeclarationToken(char* declaration, compiler_token_contents_
         contents->function.argumentCount = 0;
         contents->function.argumentString = nullptr;
         contents->function.variadic = false;
-        return;
+    } else {
+        contents->function.argumentString = declaration;
+        while(*declaration != ')') {
+            declaration++;
+            contents->function.argumentCount++;
+        }
+        *declaration = 0;
+        declaration++;
     }
 
-    contents->function.argumentString = declaration;
-    while(*declaration != ')') {
+    if(*declaration == '-' && *(declaration + 1) == '>') {
+        declaration += 2;
+        if(*declaration == ' ') declaration++;
+
+        contents->function.defaultReturn = declaration;
+        while(*declaration != ';' && *declaration != 0) declaration++;
+        *declaration = 0;
         declaration++;
-        contents->function.argumentCount++;
     }
-    *declaration = 0;
-    declaration++;
 }
 
 static void moveCursorUntilEOS(char **cursor, bool *eol, bool *eos) {
