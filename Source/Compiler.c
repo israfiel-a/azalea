@@ -139,6 +139,7 @@ static void tokenizeLine(char *line, compiler_token_t *tokens, size_t *tokenCoun
         tokens[*tokenCount] = (compiler_token_t){
             .type = type, .contents = contents 
         };
+        (*tokenCount)++;
 
         if(!eol) cursor++;
     }
@@ -153,7 +154,4 @@ void compiler_tokenize(char *contents, compiler_token_t *tokens, size_t *tokenCo
     for(size_t i = 0; i < lineCount; i++) {
         tokenizeLine(lines[i], tokens, tokenCount);
     }
-
-    (void)tokenCount;
-    (void)tokens;
 }

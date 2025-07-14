@@ -31,6 +31,12 @@ ENTRY(main)
         size_t tokenCount = 0;
         compiler_token_t tokens[tokenCount];
         compiler_tokenize(contents, tokens, &tokenCount);
+
+        for(size_t i = 0; i < tokenCount; i++) {
+            char num[2];
+            utilities_numberToString(tokens[i].type, 1, num);
+            utilities_outputString(num, true);
+        }
     }
 
     return 0;
