@@ -59,9 +59,16 @@ static void functionDeclarationToken(char* declaration, compiler_token_contents_
         contents->function.variadic = false;
     } else {
         contents->function.argumentString = declaration;
-        while(*declaration != ')') {
+        while(*declaration != ')' && (*declaration != '.' && *(declaration + 1) != '.' && *(declaration + 2) != '.')) {
             declaration++;
             contents->function.argumentCount++;
+        }
+        if(*declaration != ')') {
+            contents->function.variadic = true;
+            declaration--;
+            if(*declaration == ' ') declaration--;
+            *declaration = 0;
+            while(*declaration != ')') declaration++;
         }
         *declaration = 0;
         declaration++;
@@ -107,7 +114,10 @@ static void tokenizeLine(char *line, compiler_token_t *tokens, size_t *tokenCoun
         if(token[0] == '<') {
             type = ATTRIBUTE_TOKEN;
             attributeToken(token, &contents);
-        } else if(utilities_stringEqual(token, "import")) {
+        }
+        else if (token[0] == '{') type = BLOCK_START_TOKEN;
+        else if (token[0] == '}') type = BLOCK_END_TOKEN;
+        else if(utilities_stringEqual(token, "import")) {
             type = IMPORT_TOKEN;
             if(eos)
                 contents.import.interface = nullptr;
