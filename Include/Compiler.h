@@ -10,8 +10,9 @@ typedef enum compiler_token_type {
     FUNCTION_DECLARATION_TOKEN,
     BLOCK_START_TOKEN,
     BLOCK_END_TOKEN,
-    STRING_BEGIN_TOKEN,
-    STRING_END_TOKEN
+    STRING_TOKEN,
+    FUNCTION_CALL_START_TOKEN,
+    FUNCTION_CALL_END_TOKEN
 } compiler_token_type_t;
 
 typedef union compiler_token_contents {
@@ -49,6 +50,12 @@ typedef union compiler_token_contents {
         bool variadic;
         char* defaultReturn;
     } function;
+    struct {
+        char* contents;
+    } string;
+    struct {
+        char* name;
+    } callStart;
 } compiler_token_contents_t;
 
 typedef struct compiler_token {

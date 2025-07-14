@@ -106,8 +106,8 @@ static void tokenizeLine(char *line, compiler_token_t *tokens, size_t *tokenCoun
         else if (*cursor == ';') eos = true;
         *cursor = 0;
 
+       size_t characterLocation = 0;
         utilities_outputString(token, true);
-        utilities_outputString(" ", true);
 
         compiler_token_type_t type = UNKNOWN_TOKEN; 
         compiler_token_contents_t contents = {.unknown = {.raw = token}};
@@ -117,6 +117,15 @@ static void tokenizeLine(char *line, compiler_token_t *tokens, size_t *tokenCoun
         }
         else if (token[0] == '{') type = BLOCK_START_TOKEN;
         else if (token[0] == '}') type = BLOCK_END_TOKEN;
+        else if (token[0] == '"') {
+            type = STRING_TOKEN;
+            contents.string.contents = token+=1;
+            while(*token != '"') {
+                if(*token == 0) *token = ' ';
+                token++;
+            }
+            *token = 0;
+        }
         else if(utilities_stringEqual(token, "import")) {
             type = IMPORT_TOKEN;
             if(eos)
@@ -135,7 +144,16 @@ static void tokenizeLine(char *line, compiler_token_t *tokens, size_t *tokenCoun
                 functionDeclarationToken(token, &contents);
             }
         }
-        
+        else if((characterLocation = utilities_stringFindCharacter(token, '(', true)) != utilities_stringLength(token)) {
+            type = FUNCTION_CALL_START_TOKEN;
+            contents.callStart.name = token;
+    
+            cursor = token + characterLocation;
+            *cursor = 0;
+        }
+        else if((characterLocation = utilities_stringFindCharacter(token, ')', true)) != utilities_stringLength(token))
+            type = FUNCTION_CALL_END_TOKEN;
+
         tokens[*tokenCount] = (compiler_token_t){
             .type = type, .contents = contents 
         };

@@ -1,4 +1,4 @@
-<interface(platforms::linux::syscalls)>
+<interface(platforms::linux::x86_64::syscalls)>
 <noimplementation>
 
 known uint64_t read = 0;
