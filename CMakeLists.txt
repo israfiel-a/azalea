@@ -26,7 +26,9 @@ include_directories("${CMAKE_SOURCE_DIR}/Include")
 string(FIND ${PROJECT_NAME} "lang" PROJECT_REALNAME_INDEX)
 string(SUBSTRING ${PROJECT_NAME} 0 ${PROJECT_REALNAME_INDEX} PROJECT_REALNAME)
 
-add_library(${PROJECT_REALNAME} "${CMAKE_SOURCE_DIR}/Source/Compiler.c" "${CMAKE_SOURCE_DIR}/Source/Utilities.c" "${CMAKE_SOURCE_DIR}/Source/Targets/Linux.c")
+set(SOURCE_DIRECTORY "${CMAKE_SOURCE_DIR}/Source")
+
+add_library(${PROJECT_REALNAME} "${SOURCE_DIRECTORY}/Arguments.c" "${SOURCE_DIRECTORY}/Tokenizer.c" "${SOURCE_DIRECTORY}/Utilities.c" "${SOURCE_DIRECTORY}/Targets/Linux.c")
 add_executable(${PROJECT_REALNAME}C "${CMAKE_SOURCE_DIR}/Source/Client.c") 
 
 add_dependencies(${PROJECT_REALNAME}C ${PROJECT_REALNAME})

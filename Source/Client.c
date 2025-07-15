@@ -29,12 +29,13 @@ ENTRY(main)
         utilities_loadFile(inputNames[i], size, contents);
         
         size_t tokenCount = 0;
-        compiler_token_t tokens[tokenCount];
+        compiler_token_t tokens[4096]; // TODO: This is abyssmal.
         compiler_tokenize(contents, tokens, &tokenCount);
 
         for(size_t i = 0; i < tokenCount; i++) {
-            char num[2];
-            utilities_numberToString(tokens[i].type, 1, num);
+            size_t length = utilities_numberLength(tokens[i].type);
+            char num[length];
+            utilities_numberToString(tokens[i].type, length, num);
             utilities_outputString(num, true);
         }
     }

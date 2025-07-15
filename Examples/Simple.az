@@ -10,7 +10,7 @@
 
 // Link the standard library statically; this only links the imported modules. The produced
 // executable will not have any dependencies besides those explicitly requested.
-<program:staticstd>
+<staticstd>
 
 import std::types;
 import std::print;

@@ -1,4 +1,4 @@
-<program:buildfile>
+<buildfile>
 
 import std::build;
 import std::types;
