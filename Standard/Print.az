@@ -17,5 +17,5 @@ import std::strings;
 // print("%s": "hii") -> 'h' 'i' 'i' '0'
 // print("%s", 2: "hello") -> 'h' 'e'
 
-fn uint64_t print(std::char_t[.size] string, uint64_t size = std::stringlength(.string), ...);
+function uint64_t print(std::char_t[.size] string, uint64_t size = std::stringlength(.string), ...);
 

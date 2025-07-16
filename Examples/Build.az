@@ -3,7 +3,7 @@
 import std::build;
 import std::types;
 
-fn status_code_t entry(std::build_info_t *info) {
+function status_code_t entry(std::build_info_t *info) {
     info->outputType = FILE;
 
     info->inputCount = 1;
