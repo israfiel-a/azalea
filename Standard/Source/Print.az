@@ -20,8 +20,7 @@ function uint64_t print(std::char_t[.size] string, uint64_t size = std::stringle
     import platform::linux::x86_64::syscalls as syscalls;
     import platform::linux::constants as constants;
 
-    // Basically the same syntax as GNU inline assembly, plus the extra labels for
-    // readability.
+    // Basically the same syntax as GNU inline assembly plus extra labels for readability's sake.
     assembly(
         "syscall"
         outputs: "=a"(printed)

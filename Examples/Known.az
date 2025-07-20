@@ -1,0 +1,17 @@
+<staticstd>
+
+import std::types;
+
+// This value will be 100 when the code actually runs.
+uint8_t counter = 0;
+known {
+    while(counter != 100)
+        counter++;
+}
+
+function status_code_t entry -> SUCCESS
+    <entrypoint(bare)> 
+{
+    std::print("%u8\n": counter); 
+}
+

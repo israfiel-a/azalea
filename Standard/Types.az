@@ -11,16 +11,13 @@
 <interface(std::types)> 
 <noimplementation>
 
-// since language v1.0.0.1
 type byte_t char_t;
 
-// since language v1.0.0.1 
 enumerator uint8_t status_code_t {
     SUCCESS(0):
     FAILURE(255):
 };
 
-// since language v1.0.0.1
 structure command_line_args_t {
     char_t[*] path; 
     uint64_t count;

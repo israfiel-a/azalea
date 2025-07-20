@@ -7,7 +7,6 @@ typedef enum compiler_token_type {
     UNKNOWN_TOKEN,
     STRING_TOKEN,
     FUNCTION_TOKEN,
-    EXPRESSION_TOKEN,
     ID_TOKEN,
     DRETURN_TOKEN,
     BSTART_TOKEN,
@@ -20,11 +19,13 @@ typedef enum compiler_token_type {
 
 typedef struct compiler_token {
     compiler_token_type_t type;
-    char* string;
+    char *string;
 } compiler_token_t;
 
-void compiler_arguments(int argc, char** argv, char **inputNames, size_t *inputCount);
+void compiler_arguments(int argc, char **argv, char **inputNames,
+                        size_t *inputCount);
 
-void compiler_tokenize(char *contents, compiler_token_t *tokens, size_t *tokenCount);
+void compiler_tokenize(char *contents, compiler_token_t *tokens,
+                       size_t *tokenCount);
 
-#endif // COMPILER_H
+#endif  // COMPILER_H

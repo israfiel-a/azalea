@@ -1,8 +1,10 @@
 #include <Compiler.h>
 
-ENTRY(main)
-{
-    const char* startupMessage = "Azalea CLI compiler v" VERSION_STRING "\nCopyright (c) 2025 Israfil Argos, GPLv3\n<https://www.gnu.org/licenses/gpl-3.0.txt>\n";
+ENTRY(main) {
+    const char *startupMessage =
+        "Azalea CLI compiler v" VERSION_STRING
+        "\nCopyright (c) 2025 Israfil Argos, "
+        "GPLv3\n<https://www.gnu.org/licenses/gpl-3.0.txt>\n";
     utilities_outputString(startupMessage, true);
 
     char cwd[512] = "CWD: ";
@@ -13,7 +15,7 @@ ENTRY(main)
     size_t inputCount = 0;
     compiler_arguments(argc, argv, inputNames, &inputCount);
 
-    for(size_t i = 1; i < inputCount; i++) {
+    for (size_t i = 1; i < inputCount; i++) {
         utilities_outputString("Processing: ", false);
         utilities_outputString(inputNames[i], true);
 
@@ -27,16 +29,19 @@ ENTRY(main)
 
         char contents[size + 1];
         utilities_loadFile(inputNames[i], size, contents);
-        
+
         size_t tokenCount = 0;
-        compiler_token_t tokens[4096]; // TODO: This is abyssmal.
+        compiler_token_t tokens[4096];  // TODO: This is abyssmal.
         compiler_tokenize(contents, tokens, &tokenCount);
 
-        for(size_t i = 0; i < tokenCount; i++) {
-            size_t length = utilities_numberLength(tokens[i].type);
-            char num[length];
-            utilities_numberToString(tokens[i].type, length, num);
-            utilities_outputString(num, true);
+        // temp for logging purposes
+        static const char *string_tokens[] = {
+            "UNKNOWN_TOKEN", "STRING_TOKEN", "FUNCTION_TOKEN", "ID_TOKEN",
+            "DRETURN_TOKEN", "BSTART_TOKEN", "BEND_TOKEN",     "ASTART_TOKEN",
+            "AEND_TOKEN",    "IMPORT_TOKEN", "ALIAS_TOKEN"};
+
+        for (size_t i = 0; i < tokenCount; i++) {
+            utilities_outputString(string_tokens[tokens[i].type], true);
         }
     }
 
