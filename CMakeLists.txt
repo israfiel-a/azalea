@@ -28,7 +28,7 @@ string(SUBSTRING ${PROJECT_NAME} 0 ${PROJECT_REALNAME_INDEX} PROJECT_REALNAME)
 
 set(SOURCE_DIRECTORY "${CMAKE_SOURCE_DIR}/Source")
 
-add_library(${PROJECT_REALNAME} "${SOURCE_DIRECTORY}/Arguments.c" "${SOURCE_DIRECTORY}/Tokenizer.c" "${SOURCE_DIRECTORY}/Utilities.c" "${SOURCE_DIRECTORY}/Targets/Linux.c")
+add_library(${PROJECT_REALNAME} "${SOURCE_DIRECTORY}/Arguments.c" "${SOURCE_DIRECTORY}/Token.c" "${SOURCE_DIRECTORY}/Utilities.c" "${SOURCE_DIRECTORY}/Targets/Linux.c")
 add_executable(${PROJECT_REALNAME}C "${CMAKE_SOURCE_DIR}/Source/Client.c") 
 
 add_dependencies(${PROJECT_REALNAME}C ${PROJECT_REALNAME})

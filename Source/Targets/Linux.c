@@ -37,23 +37,25 @@
 //
 // The syscall instruction clobbers RCX and R11.
 
-void utilities_outputString(const char* const string, bool newline) {
-    size_t stringLength = utilities_stringLength(string);
-    long returnValue;
-
+void utilities_outputStringN(const char* const string, size_t number) {
     __asm("syscall"
-          : "=a"(returnValue)
+          : 
           : "a"(1),            // rax
             "D"(1),            // rdi
             "S"(string),       // rsi
-            "d"(stringLength)  // rdx
+            "d"(number)        // rdx
           : "rcx", "r11");
+}
 
+void utilities_outputString(const char* const string, bool newline) {
+    size_t stringLength = utilities_stringLength(string);
+
+    utilities_outputStringN(string, stringLength);
     if (!newline) return;
 
     char* output = "\n";
     __asm("syscall"
-          : "=a"(returnValue)
+          : 
           : "a"(1), "D"(1), "S"(output), "d"(1)
           : "rcx", "r11");
 }

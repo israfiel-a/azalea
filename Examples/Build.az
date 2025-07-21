@@ -3,14 +3,12 @@
 import std::build;
 import std::types;
 
-function status_code_t entry(std::build_info_t *info) {
+function status_code_t entry(std::build_info_t *info) = SUCCESS {
     info->outputType = FILE;
 
     info->inputCount = 1;
     info->inputFiles = {
         "Simple.az"
     };
-
-    return SUCCESS;
 }
 

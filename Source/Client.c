@@ -30,18 +30,20 @@ ENTRY(main) {
         char contents[size + 1];
         utilities_loadFile(inputNames[i], size, contents);
 
-        size_t tokenCount = 0;
-        compiler_token_t tokens[4096];  // TODO: This is abyssmal.
-        compiler_tokenize(contents, tokens, &tokenCount);
-
         // temp for logging purposes
+        [[maybe_unused]]
         static const char *string_tokens[] = {
-            "UNKNOWN_TOKEN", "STRING_TOKEN", "FUNCTION_TOKEN", "ID_TOKEN",
-            "DRETURN_TOKEN", "BSTART_TOKEN", "BEND_TOKEN",     "ASTART_TOKEN",
-            "AEND_TOKEN",    "IMPORT_TOKEN", "ALIAS_TOKEN"};
+            "UNKNOWN_TOKEN", "IMPORT_TOKEN", "FUNCTION_TOKEN", "STRING_TOKEN",
+            "ASTART_TOKEN",  "AEND_TOKEN",   "BSTART_TOKEN",   "BEND_TOKEN",
+            "SSTART_TOKEN",  "SSEND_TOKEN",  "EOF_TOKEN"};
 
-        for (size_t i = 0; i < tokenCount; i++) {
-            utilities_outputString(string_tokens[tokens[i].type], true);
+        char *contentsPointer = contents;
+        compiler_token_t token = {0};
+        while (token.type != EOF_TOKEN) {
+            compiler_getToken(&contentsPointer, &token);
+            // utilities_outputStringN(token.token, token.length);
+            // utilities_outputString("", true);
+            utilities_outputString(string_tokens[token.type], true);
         }
     }
 

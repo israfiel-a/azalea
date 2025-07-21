@@ -31,6 +31,8 @@ void utilities_numberToString(size_t number, size_t length, char* string);
 
 void utilities_outputString(const char* const string, bool newline);
 
+void utilities_outputStringN(const char* const string, size_t number);
+
 void utilities_getCWD(char* buffer, size_t bufferSize);
 
 size_t utilities_getFileSize(const char* const name);
