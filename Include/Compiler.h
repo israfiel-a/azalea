@@ -31,6 +31,6 @@ void compiler_arguments(int argc, char **argv, char **inputNames,
 
 void compiler_getToken(char **contents, compiler_token_t *token);
 
-void compiler_work(char *token, size_t tokenLength, char *error);
+void compiler_translateIR(char *token, size_t tokenLength, char *error);
 
 #endif  // COMPILER_H

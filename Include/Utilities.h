@@ -39,6 +39,8 @@ size_t utilities_getFileSize(const char* const name);
 
 void utilities_loadFile(const char* const name, size_t size, char* contents);
 
+void utilities_writeFile(const char* const name, char* contents, size_t size);
+
 #define ENTRY(name)                                                        \
     __asm(                                                                 \
         ".global _start\n_start:\nmovl (%rsp), %edi\nlea 8(%rsp), "        \

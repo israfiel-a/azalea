@@ -97,3 +97,28 @@ void utilities_loadFile(const char* const name, size_t size, char* contents) {
           : "rcx", "r11");
     contents[size] = 0;
 }
+
+void utilities_writeFile(const char* const name, char* contents, size_t size)
+{
+    int fd;
+    __asm("syscall"
+        : "=a"(fd)
+        : "a"(2), "D"(name), "S"(0x441 | 0x20000), "d"(420)
+        : "rcx", "r11"
+    );
+
+    __asm(
+        "syscall"
+        :
+        : "a"(1), "D"(fd), "S"(contents), "d"(size)
+        : "rcx", "r11"
+    );
+
+    __asm(
+        "syscall"
+        :
+        : "a"(3), "D"(fd)
+        : "rcx", "r11"
+    );
+}
+
