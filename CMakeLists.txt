@@ -28,8 +28,13 @@ string(SUBSTRING ${PROJECT_NAME} 0 ${PROJECT_REALNAME_INDEX} PROJECT_REALNAME)
 
 set(SOURCE_DIRECTORY "${CMAKE_SOURCE_DIR}/Source")
 
-add_library(${PROJECT_REALNAME} "${SOURCE_DIRECTORY}/Arguments.c" "${SOURCE_DIRECTORY}/Token.c" "${SOURCE_DIRECTORY}/Utilities.c" "${SOURCE_DIRECTORY}/Targets/Linux.c")
-add_executable(${PROJECT_REALNAME}C "${CMAKE_SOURCE_DIR}/Source/Client.c") 
+set(LIBRARY_SOURCE_FILES "${SOURCE_DIRECTORY}/Compiler/Arguments.c" "${SOURCE_DIRECTORY}/Compiler/Tokens.c" "${SOURCE_DIRECTORY}/Utilities/Numbers.c" "${SOURCE_DIRECTORY}/Utilities/Strings.c")
+if(LINUX)
+    list(APPEND LIBRARY_SOURCE_FILES "${SOURCE_DIRECTORY}/Targets/Linux/Files.c" "${SOURCE_DIRECTORY}/Targets/Linux/Output.c") 
+endif()
+
+add_library(${PROJECT_REALNAME} ${LIBRARY_SOURCE_FILES})
+add_executable(${PROJECT_REALNAME}C "${SOURCE_DIRECTORY}/Client.c") 
 
 add_dependencies(${PROJECT_REALNAME}C ${PROJECT_REALNAME})
 target_link_libraries(${PROJECT_REALNAME}C ${PROJECT_REALNAME})

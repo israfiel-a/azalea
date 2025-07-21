@@ -1,4 +1,5 @@
 #include <Compiler.h>
+#include <Utilities/Strings.h>
 
 static size_t lines = 0;
 static size_t column = 0;
@@ -48,14 +49,13 @@ void compiler_getToken(char** contents, compiler_token_t* token) {
         return;
     }
 
-    if(*token->token == '"') {
+    if (*token->token == '"') {
         token->type = STRING_TOKEN;
         token->token++;
-        while(**contents != 0 && **contents != '"') (*contents)++;
+        while (**contents != 0 && **contents != '"') (*contents)++;
         token->length = *contents - token->token;
-        if(**contents == '"') (*contents)++;
-    }
-    else if (*token->token == '(') {
+        if (**contents == '"') (*contents)++;
+    } else if (*token->token == '(') {
         token->type = SSTART_TOKEN;
         (*contents)++;
     } else if (*token->token == ')') {
@@ -73,10 +73,9 @@ void compiler_getToken(char** contents, compiler_token_t* token) {
         token->type = BSTART_TOKEN;
     } else if (*token->token == '}') {
         token->type = BEND_TOKEN;
-    } else if (utilities_stringEqualN(token->token, "import", token->length - 1)) {
+    } else if (strings_compareN(token->token, "import", token->length - 1)) {
         token->type = IMPORT_TOKEN;
-    } else if (utilities_stringEqualN(token->token, "function",
-                                      token->length - 1)) {
+    } else if (strings_compareN(token->token, "function", token->length - 1)) {
         token->type = FUNCTION_TOKEN;
     } else
         token->type = UNKNOWN_TOKEN;
