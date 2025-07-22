@@ -4,6 +4,40 @@
 #include <Utilities/Output.h>
 #include <Utilities/Strings.h>
 
+static int interpretFile(const char *const path, size_t cwdLength, char *cwd) {
+    size_t pathLength = strings_getLength(path);
+    char filePath[cwdLength + pathLength];
+    for (size_t i = 0; i < cwdLength; ++i) filePath[i] = cwd[i];
+    filePath[cwdLength - 1] = '/';
+    for (size_t i = 0; i < pathLength; ++i) filePath[i + cwdLength] = path[i];
+    filePath[cwdLength + pathLength - 1] = 0;
+
+    output_string("\nInterpreting file '", 19, false);
+    output_string(filePath, cwdLength + pathLength - 1, false);
+    output_string("'.", 2, true);
+
+    unsigned int file = files_open(filePath, FILES_READ, 0);
+
+    size_t fileSize = files_size(file);
+    output_string("File size: ", 11, false);
+    size_t fileSizeDigits = numbers_countDigits(fileSize);
+    char fileSizeString[fileSizeDigits];
+    numbers_toString(fileSize, fileSizeDigits, fileSizeString);
+    output_string(fileSizeString, fileSizeDigits, true);
+
+    char contents[fileSize + 1];
+    if (!files_read(file, fileSize, contents)) {
+        output_string("Failed to read file.", 20, true);
+        return -1;
+    }
+    files_close(file);
+    output_string("Read file into memory.\n", 23, true);
+
+    compiler_ast_node_t *head;
+    compiler_generateAST(contents, &head);
+    return 0;
+}
+
 COMPILER_ENTRY {
     const char *startupMessage =
         "\nAzalea CLI compiler v" VERSION_STRING
@@ -19,38 +53,6 @@ COMPILER_ENTRY {
 
     compiler_arguments_t arguments = {0};
     if (!compiler_arguments(argc, argv, &arguments)) return -1;
-
-    if (arguments.flags.interpreted) {
-        size_t pathLength = strings_getLength(arguments.target);
-        char filePath[cwdLength + pathLength];
-        for (size_t i = 0; i < cwdLength; ++i) filePath[i] = cwd[i];
-        filePath[cwdLength - 1] = '/';
-        for (size_t i = 0; i < pathLength; ++i)
-            filePath[i + cwdLength] = arguments.target[i];
-        filePath[cwdLength + pathLength - 1] = 0;
-
-        output_string("\nInterpreting file '", 19, false);
-        output_string(filePath, cwdLength + pathLength - 1, false);
-        output_string("'.", 2, true);
-
-        unsigned int file = files_open(filePath, FILES_READ, 0);
-
-        size_t fileSize = files_size(file);
-        output_string("File size: ", 11, false);
-        size_t fileSizeDigits = numbers_countDigits(fileSize);
-        char fileSizeString[fileSizeDigits];
-        numbers_toString(fileSize, fileSizeDigits, fileSizeString);
-        output_string(fileSizeString, fileSizeDigits, true);
-
-        char contents[fileSize + 1];
-        if (!files_read(file, fileSize, contents)) {
-            output_string("Failed to read file.", 20, true);
-            return -1;
-        }
-        files_close(file);
-        output_string("Read file into memory.\n", 23, true);
-        
-        compiler_ast_node_t *head;
-        compiler_generateAST(contents, &head);
-    }
+    if (arguments.flags.interpreted)
+        return interpretFile(arguments.target, cwdLength, cwd);
 }
