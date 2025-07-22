@@ -48,7 +48,7 @@ COMPILER_ENTRY {
             return -1;
         }
         files_close(file);
-        output_string("Read file into memory.\n", 22, true);
+        output_string("Read file into memory.\n", 23, true);
         
         compiler_ast_node_t *head;
         compiler_generateAST(contents, &head);

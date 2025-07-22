@@ -9,7 +9,11 @@ typedef enum compiler_token_type {
     IMPORT_TOKEN,
     ALIAS_TOKEN,
     FUNCTION_TOKEN,
+    ENUMERATOR_TOKEN,
+    STRUCTURE_TOKEN,
+    TYPE_TOKEN,
     STRING_TOKEN,
+    KNOWN_TOKEN,
     ASTART_TOKEN,  // attribute
     AEND_TOKEN,
     BSTART_TOKEN,  // block

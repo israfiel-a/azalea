@@ -89,6 +89,14 @@ void compiler_getToken(char** contents, compiler_token_t* token) {
         token->type = IMPORT_TOKEN;
     } else if (strings_compareN(token->token, "function", token->length - 1)) {
         token->type = FUNCTION_TOKEN;
+    } else if(strings_compareN(token->token, "enumerator", token->length - 1)){
+        token->type = ENUMERATOR_TOKEN;
+    } else if(strings_compareN(token->token, "structure", token->length - 1)){
+        token->type = STRUCTURE_TOKEN;
+    } else if(strings_compareN(token->token, "type", token->length - 1)){
+        token->type = TYPE_TOKEN;
+    } else if(strings_compareN(token->token, "known", token->length - 1)) {
+        token->type = KNOWN_TOKEN;
     } else
         token->type = UNKNOWN_TOKEN;
 }

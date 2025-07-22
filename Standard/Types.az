@@ -11,7 +11,11 @@
 <interface(std::types)> 
 <noimplementation>
 
-type byte_t char_t;
+// The integrals are as follows:
+// uint8_t, uint16_t, uint32_t, uin64_t + signed variants
+// generic_t ??? think about how to implement this
+
+type uint8_t char_t;
 
 enumerator uint8_t status_code_t {
     SUCCESS(0):

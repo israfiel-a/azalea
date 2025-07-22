@@ -49,10 +49,14 @@ void compiler_generateAST(const char *const contents,
 
     while (token.type != EOF_TOKEN) {
         switch (token.type) {
-            case EOS_TOKEN: [[fallthrough]]; case AEND_TOKEN: advanceTree(&cursor); break;
+            case EOS_TOKEN:
+                [[fallthrough]];
+            case AEND_TOKEN:
+                advanceTree(&cursor);
+                break;
             case IMPORT_TOKEN:
                 cursor->operation = IMPORT_OPERATION;
-            break;
+                break;
             case ASTART_TOKEN:
                 cursor->operation = FILE_ATTRIBUTE_OPERATION;
                 break;
