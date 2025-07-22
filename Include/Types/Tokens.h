@@ -7,6 +7,7 @@
 typedef enum compiler_token_type {
     UNKNOWN_TOKEN,
     IMPORT_TOKEN,
+    ALIAS_TOKEN,
     FUNCTION_TOKEN,
     STRING_TOKEN,
     ASTART_TOKEN,  // attribute
@@ -15,7 +16,8 @@ typedef enum compiler_token_type {
     BEND_TOKEN,
     SSTART_TOKEN,  // scope
     SEND_TOKEN,
-    EOF_TOKEN
+    EOS_TOKEN, // end of statement (';')
+    EOF_TOKEN,
 } compiler_token_type_t;
 
 typedef struct compiler_token {

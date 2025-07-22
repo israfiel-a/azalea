@@ -1,6 +1,9 @@
 #ifndef AZ_COMPILER_TYPES_AST_H
 #define AZ_COMPILER_TYPES_AST_H
 
+#define __need_size_t
+#include <stddef.h>
+
 typedef enum compiler_ast_operation {
     UNKNOWN_OPERATION,
     FILE_ATTRIBUTE_OPERATION,
@@ -31,6 +34,8 @@ typedef struct compiler_ast_node {
         struct {
             char* interface;
             char* alias;
+            size_t interfaceLength;
+            size_t aliasLength;
         } import;
     } contents;
 

@@ -1,6 +1,6 @@
 #include <Compiler.h>
+#include <Utilities/Output.h>  // TEMP!!!!
 #include <Utilities/Strings.h>
-#include <Utilities/Output.h> // TEMP!!!!
 
 static size_t lines = 0;
 static size_t column = 0;
@@ -43,14 +43,18 @@ void compiler_getToken(char** contents, compiler_token_t* token) {
     // Remove trailing delimiter or signal EOF.
     if (**contents != 0) {
         if (**contents != '(' && **contents != ')' && **contents != '<' &&
-            **contents != '>')
+            **contents != '>' && **contents != ';')
             (*contents)++;
     } else {
         token->type = EOF_TOKEN;
         return;
     }
 
-    if (*token->token == '"') {
+    if (*token->token == ';') {
+        token->type = EOS_TOKEN;
+        token->token++;
+        removeEmptyTokens(contents);
+    } else if (*token->token == '"') {
         token->type = STRING_TOKEN;
         token->token++;
         while (**contents != 0 && **contents != '"') (*contents)++;
@@ -74,6 +78,13 @@ void compiler_getToken(char** contents, compiler_token_t* token) {
         token->type = BSTART_TOKEN;
     } else if (*token->token == '}') {
         token->type = BEND_TOKEN;
+    } else if (*token->token == 'a' && *(token->token + 1) == 's') {
+        token->type = ALIAS_TOKEN;
+        token->token += 2;
+        while(**contents == ' ' || **contents == '\n') (*contents)++; 
+        token->token = *contents;
+        while (**contents != 0 && **contents != ';') (*contents)++;
+        token->length = *contents - token->token;
     } else if (strings_compareN(token->token, "import", token->length - 1)) {
         token->type = IMPORT_TOKEN;
     } else if (strings_compareN(token->token, "function", token->length - 1)) {
