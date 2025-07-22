@@ -43,10 +43,14 @@ COMPILER_ENTRY {
         output_string(fileSizeString, fileSizeDigits, true);
 
         char contents[fileSize + 1];
-        files_read(file, fileSize, contents);
+        if (!files_read(file, fileSize, contents)) {
+            output_string("Failed to read file.", 20, true);
+            return -1;
+        }
         files_close(file);
         output_string("Read file into memory.\n", 22, true);
-
-        return compiler_interpret((char **)contents);
+        
+        compiler_ast_node_t *head;
+        compiler_generateAST((char **)&contents, &head);
     }
 }

@@ -33,12 +33,15 @@ void files_close(unsigned int descriptor)
     __asm("syscall" : : "a"(3), "D"(descriptor) : "rcx", "r11");
 }
 
-void files_read(unsigned int descriptor, size_t size, char* contents) {
+bool files_read(unsigned int descriptor, size_t size, char* contents) {
+    long read;
     __asm("syscall"
-          :
+          : "=a"(read)
           : "a"(0), "D"(descriptor), "S"(contents), "d"(size)
           : "rcx", "r11");
     contents[size] = 0;
+
+    return read == (long)size;
 }
 
 void files_write(unsigned int descriptor, size_t size, const char* const contents)  {
