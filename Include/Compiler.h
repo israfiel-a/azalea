@@ -17,7 +17,7 @@ bool compiler_arguments(int argc, char **argv, compiler_arguments_t *arguments);
 
 void compiler_getToken(char **contents, compiler_token_t *token);
 
-void compiler_generateAST(char **contents, compiler_ast_node_t **head);
+void compiler_generateAST(const char *const contents, compiler_ast_node_t **head);
 
 bool compiler_interpret(char **contents);
 

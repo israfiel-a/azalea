@@ -34,12 +34,13 @@ static compiler_ast_file_attribute_type_t getFileAttribute(
     return UNKNOWN_FILE_ATTRIBUTE;
 }
 
-void compiler_generateAST(char **contents, compiler_ast_node_t **head) {
+void compiler_generateAST(const char* const contents, compiler_ast_node_t **head) {
     *head = getNewNode();
     compiler_ast_node_t *cursor = *head;
 
+    char* contentsPointer = (char*)contents;
     compiler_token_t token = {0};
-    compiler_getToken(contents, &token);
+    compiler_getToken(&contentsPointer, &token);
 
     while (token.type != EOF_TOKEN) {
         switch (token.type) {
@@ -58,6 +59,6 @@ void compiler_generateAST(char **contents, compiler_ast_node_t **head) {
                 break;  // TEMP!!!!!
         }
 
-        compiler_getToken(contents, &token);
+        compiler_getToken(&contentsPointer, &token);
     }
 }

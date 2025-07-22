@@ -51,6 +51,6 @@ COMPILER_ENTRY {
         output_string("Read file into memory.\n", 22, true);
         
         compiler_ast_node_t *head;
-        compiler_generateAST((char **)&contents, &head);
+        compiler_generateAST(contents, &head);
     }
 }
