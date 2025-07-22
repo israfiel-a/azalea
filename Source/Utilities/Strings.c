@@ -10,8 +10,7 @@ bool strings_compare(const char* const a, const char* const b) {
     return false;
 }
 
-bool strings_compareN(const char* const a, const char* const b,
-                            size_t number) {
+bool strings_compareN(const char* const a, const char* const b, size_t number) {
     char *av = (char*)a, *bv = (char*)b;
     size_t checked = 0;
     while (*av == *bv) {
@@ -23,9 +22,24 @@ bool strings_compareN(const char* const a, const char* const b,
     return false;
 }
 
+bool strings_compareInsensitive(const char* const a, const char* const b) {
+    char *av = (char*)a, *bv = (char*)b;
+    while (strings_toLower(*av) == strings_toLower(*bv)) {
+        if (*av == 0) return true;
+        av++;
+        bv++;
+    }
+    return false;
+}
+
 size_t strings_getLength(const char* const string) {
     char* stringPointer = (char*)string;
     while (*stringPointer++ != 0) __asm("");
     return stringPointer - string;
+}
+
+char strings_toLower(char character) {
+    // Credit: https://stackoverflow.com/a/2661917
+    return character > 0x40 && character < 0x5B ? character | 0x60 : character;
 }
 

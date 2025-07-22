@@ -6,68 +6,47 @@
 
 COMPILER_ENTRY {
     const char *startupMessage =
-        "Azalea CLI compiler v" VERSION_STRING
+        "\nAzalea CLI compiler v" VERSION_STRING
         "\nCopyright (c) 2025 Israfil Argos, "
         "GPLv3\n<https://www.gnu.org/licenses/gpl-3.0.txt>\n";
-    output_string(startupMessage, true);
+    output_string(startupMessage, 113, true);
 
-    output_stringN("CWD: ", 5);
+    output_string("CWD: ", 5, false);
     char cwd[512];
     files_getCWD(512, cwd);
-    output_string(cwd, true);
     size_t cwdLength = strings_getLength(cwd);
+    output_string(cwd, cwdLength, true);
 
-    char *inputNames[argc];
-    size_t inputCount = 0;
-    compiler_arguments(argc, argv, inputNames, &inputCount);
+    compiler_arguments_t arguments = {0};
+    if (!compiler_arguments(argc, argv, &arguments)) return -1;
 
-    for (size_t i = 1; i < inputCount; i++) {
-        size_t pathLength = strings_getLength(inputNames[i]);
-        char inputPath[cwdLength + pathLength + 3];
-        char outputPath[cwdLength + pathLength + 3];
-        for (size_t j = 0; j < cwdLength; j++) {
-            inputPath[j] = cwd[j];
-            outputPath[j] = cwd[j];
-        }
-        inputPath[cwdLength - 1] = outputPath[cwdLength - 1] = '/';
-        for (size_t j = 0; j < pathLength; j++) {
-            inputPath[cwdLength + j] = inputNames[i][j];
-            outputPath[cwdLength + j] = inputNames[i][j];
-        }
-        inputPath[cwdLength + pathLength - 1] =
-            outputPath[cwdLength + pathLength - 1] = '.';
-        inputPath[cwdLength + pathLength] = 'a';
-        outputPath[cwdLength + pathLength] = 'b';
-        inputPath[cwdLength + pathLength + 1] =
-            outputPath[cwdLength + pathLength + 1] = 'z';
-        inputPath[cwdLength + pathLength + 2] =
-            outputPath[cwdLength + pathLength + 2] = 0;
+    if (arguments.flags.interpreted) {
+        size_t pathLength = strings_getLength(arguments.target);
+        char filePath[cwdLength + pathLength];
+        for (size_t i = 0; i < cwdLength; ++i) filePath[i] = cwd[i];
+        filePath[cwdLength - 1] = '/';
+        for (size_t i = 0; i < pathLength; ++i)
+            filePath[i + cwdLength] = arguments.target[i];
+        filePath[cwdLength + pathLength - 1] = 0;
 
-        output_stringN("Processing: ", 12);
-        output_string(inputPath, true);
+        output_string("\nInterpreting file '", 19, false);
+        output_string(filePath, cwdLength + pathLength - 1, false);
+        output_string("'.", 2, true);
 
-        unsigned int inputFile = files_open(inputPath, FILES_READ, 0);
-        unsigned int outputFile =
-            files_open(outputPath, FILES_WRITE | FILES_CREATE, 0644);
+        unsigned int file = files_open(filePath, FILES_READ, 0);
 
-        size_t size = files_size(inputFile);
-        output_stringN("Size: ", 6);
+        size_t fileSize = files_size(file);
+        output_string("File size: ", 11, false);
+        size_t fileSizeDigits = numbers_countDigits(fileSize);
+        char fileSizeString[fileSizeDigits];
+        numbers_toString(fileSize, fileSizeDigits, fileSizeString);
+        output_string(fileSizeString, fileSizeDigits, true);
 
-        size_t sizeLength = numbers_countDigits(size);
-        char sizeString[sizeLength + 1];
-        numbers_toString(size, sizeLength, sizeString);
-        output_string(sizeString, true);
+        char contents[fileSize + 1];
+        files_read(file, fileSize, contents);
+        files_close(file);
+        output_string("Read file into memory.\n", 22, true);
 
-        char contents[size + 1];
-        files_read(inputFile, size, contents);
-        files_close(inputFile);
-
-        char *contentsPointer = contents;
-        compiler_token_t token = {0};
-        while (token.type != EOF_TOKEN) {
-            compiler_getToken(&contentsPointer, &token);
-            files_write(outputFile, token.length, token.token);
-        }
-        files_close(outputFile);
+        return compiler_interpret((char **)contents);
     }
 }

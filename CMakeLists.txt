@@ -28,7 +28,7 @@ string(SUBSTRING ${PROJECT_NAME} 0 ${PROJECT_REALNAME_INDEX} PROJECT_REALNAME)
 
 set(SOURCE_DIRECTORY "${CMAKE_SOURCE_DIR}/Source")
 
-set(LIBRARY_SOURCE_FILES "${SOURCE_DIRECTORY}/Compiler/Arguments.c" "${SOURCE_DIRECTORY}/Compiler/Tokens.c" "${SOURCE_DIRECTORY}/Utilities/Numbers.c" "${SOURCE_DIRECTORY}/Utilities/Strings.c")
+set(LIBRARY_SOURCE_FILES "${SOURCE_DIRECTORY}/Compiler/Arguments.c" "${SOURCE_DIRECTORY}/Compiler/Interpret.c" "${SOURCE_DIRECTORY}/Compiler/Tokens.c" "${SOURCE_DIRECTORY}/Utilities/Numbers.c" "${SOURCE_DIRECTORY}/Utilities/Strings.c")
 if(LINUX)
     list(APPEND LIBRARY_SOURCE_FILES "${SOURCE_DIRECTORY}/Targets/Linux/Files.c" "${SOURCE_DIRECTORY}/Targets/Linux/Output.c") 
 endif()

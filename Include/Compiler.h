@@ -33,11 +33,21 @@ typedef struct compiler_token {
     size_t column;
 } compiler_token_t;
 
-void compiler_arguments(int argc, char **argv, char **inputNames,
-                        size_t *inputCount);
+typedef enum compiler_backend { NASM_BACKEND } compiler_backend_t;
+#define COMPILER_BACKEND_LIST "NASM"
+
+typedef struct compiler_arguments {
+    struct {
+        bool interpreted : 1;
+    } flags;
+    compiler_backend_t backend;
+    char *target;
+} compiler_arguments_t;
+
+bool compiler_arguments(int argc, char **argv, compiler_arguments_t *arguments);
 
 void compiler_getToken(char **contents, compiler_token_t *token);
 
-void compiler_translateIR(char *token, size_t tokenLength, char *error);
+bool compiler_interpret(char **contents);
 
 #endif  // COMPILER_H
