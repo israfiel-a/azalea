@@ -57,6 +57,9 @@ void compiler_generateAST(const char *const contents,
             case IMPORT_TOKEN:
                 cursor->operation = IMPORT_OPERATION;
                 break;
+            case FUNCTION_TOKEN:
+                cursor->operation = FUNCTION_DECLARATION_OPERATION;
+                break;
             case ASTART_TOKEN:
                 cursor->operation = FILE_ATTRIBUTE_OPERATION;
                 break;
@@ -79,6 +82,10 @@ void compiler_generateAST(const char *const contents,
                     case IMPORT_OPERATION:
                         cursor->contents.import.interface = token.token;
                         cursor->contents.import.interfaceLength = token.length;
+                        break;
+                    case FUNCTION_DECLARATION_OPERATION:
+                        cursor->contents.functionDeclaration.name = token.token;
+                        cursor->contents.functionDeclaration.nameLength = token.length;
                         break;
                     default:
                         break;

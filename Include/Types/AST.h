@@ -4,10 +4,16 @@
 #define __need_size_t
 #include <stddef.h>
 
+// You do NOT need more than eight parameters dawg :pray:
+#define COMPILER_MAX_FUNCTION_PARAMETERS 8
+// probably will be an issue later--but 4kb? that sounds like a lot to me :3
+#define COMPILER_AST_ARENA_SIZE 4096
+
 typedef enum compiler_ast_operation {
     UNKNOWN_OPERATION,
     FILE_ATTRIBUTE_OPERATION,
-    IMPORT_OPERATION
+    IMPORT_OPERATION,
+    FUNCTION_DECLARATION_OPERATION
 } compiler_ast_operation_t;
 
 typedef enum compiler_ast_file_attribute_type {
@@ -37,6 +43,15 @@ typedef struct compiler_ast_node {
             size_t interfaceLength;
             size_t aliasLength;
         } import;
+        struct {
+            char* name;
+            size_t nameLength;
+            size_t parameterCount;
+            struct {
+                size_t typeID;
+                char* name;
+            } parameters[COMPILER_MAX_FUNCTION_PARAMETERS];
+        } functionDeclaration;
     } contents;
 
     struct compiler_ast_node *up, *left, *right;

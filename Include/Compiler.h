@@ -11,8 +11,6 @@
         "%rsi\ncall main\nmovl %eax, %edi\nmovl $60, %eax\nsyscall"); \
     int main(int argc, char **argv)
 
-#define COMPILER_AST_ARENA_SIZE 4096
-
 bool compiler_arguments(int argc, char **argv, compiler_arguments_t *arguments);
 
 void compiler_getToken(char **contents, compiler_token_t *token);
