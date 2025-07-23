@@ -13,7 +13,8 @@ typedef enum compiler_ast_operation {
     UNKNOWN_OPERATION,
     FILE_ATTRIBUTE_OPERATION,
     IMPORT_OPERATION,
-    FUNCTION_DECLARATION_OPERATION
+    FUNCTION_DECLARATION_OPERATION,
+    TYPE_DECLARATION_OPERATION
 } compiler_ast_operation_t;
 
 typedef enum compiler_ast_file_attribute_type {
@@ -48,10 +49,15 @@ typedef struct compiler_ast_node {
             size_t nameLength;
             size_t parameterCount;
             struct {
-                size_t typeID;
+                struct compiler_ast_node *type;
                 char* name;
             } parameters[COMPILER_MAX_FUNCTION_PARAMETERS];
         } functionDeclaration;
+        struct {
+            char* name;
+            size_t nameLength;
+            size_t resolved;
+        } typeDeclaration;
     } contents;
 
     struct compiler_ast_node *up, *left, *right;

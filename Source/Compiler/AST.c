@@ -38,6 +38,47 @@ static compiler_ast_file_attribute_type_t getFileAttribute(
     return UNKNOWN_FILE_ATTRIBUTE;
 }
 
+static compiler_ast_node_t *resolveTypename(const char *const name,
+                                            size_t length,
+                                            compiler_ast_node_t *head) {
+    // TODO: better
+    compiler_ast_node_t *cursors[32];
+    size_t cursorCount = 1;
+    cursors[0] = head;
+
+    while (cursorCount != 0) {
+        for (size_t i = 0; i < cursorCount; i++) {
+            compiler_ast_node_t *currentCursor = cursors[i];
+            if (currentCursor->operation == TYPE_DECLARATION_OPERATION &&
+                strings_compareN(
+                    name, currentCursor->contents.typeDeclaration.name, length))
+                return currentCursor;
+
+            size_t newCursors = 0;
+            if (currentCursor->left != nullptr) {
+                newCursors++;
+                cursors[i] = currentCursor->left;
+                if (cursors[i] == nullptr) cursorCount--;
+            }
+            if (currentCursor->right != nullptr) {
+                if (newCursors == 1) {
+                    cursors[cursorCount] = cursors[i]->right;
+                    if (cursors[cursorCount] != nullptr) cursorCount++;
+                } else {
+                    cursors[i] = cursors[i]->right;
+                    if(cursors[i] == nullptr) cursorCount--;
+                }
+            }
+            if(newCursors == 0) cursorCount--;
+        }
+    }
+
+    output_string("Failed to resolve typename '", 28, false);
+    output_string(name, length, false);
+    output_string("'.", 2, true);
+    return nullptr;
+}
+
 void compiler_generateAST(const char *const contents,
                           compiler_ast_node_t **head) {
     *head = getNewNode();
@@ -46,6 +87,8 @@ void compiler_generateAST(const char *const contents,
     char *contentsPointer = (char *)contents;
     compiler_token_t token = {0};
     compiler_getToken(&contentsPointer, &token);
+
+    size_t scope = 0;
 
     while (token.type != EOF_TOKEN) {
         switch (token.type) {
@@ -62,6 +105,12 @@ void compiler_generateAST(const char *const contents,
                 break;
             case ASTART_TOKEN:
                 cursor->operation = FILE_ATTRIBUTE_OPERATION;
+                break;
+            case SSTART_TOKEN:
+                scope++;
+                break;
+            case SEND_TOKEN:
+                scope--;
                 break;
             case ALIAS_TOKEN:
                 if (cursor->operation != IMPORT_OPERATION) {
@@ -84,8 +133,31 @@ void compiler_generateAST(const char *const contents,
                         cursor->contents.import.interfaceLength = token.length;
                         break;
                     case FUNCTION_DECLARATION_OPERATION:
-                        cursor->contents.functionDeclaration.name = token.token;
-                        cursor->contents.functionDeclaration.nameLength = token.length;
+                        if (scope == 0) {
+                            cursor->contents.functionDeclaration.name =
+                                token.token;
+                            cursor->contents.functionDeclaration.nameLength =
+                                token.length;
+                        } else {
+                            static bool which = false;
+                            if (!which) {
+                                cursor->contents.functionDeclaration
+                                    .parameters[cursor->contents
+                                                    .functionDeclaration
+                                                    .parameterCount]
+                                    .type = resolveTypename(
+                                    token.token, token.length, *head);
+                                cursor->contents.functionDeclaration
+                                    .parameterCount++;
+                                which = true;
+                            } else {
+                                cursor->contents.functionDeclaration.name =
+                                    token.token;
+                                cursor->contents.functionDeclaration
+                                    .nameLength = token.length;
+                                which = true;
+                            }
+                        }
                         break;
                     default:
                         break;
