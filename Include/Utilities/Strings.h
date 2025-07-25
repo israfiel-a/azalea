@@ -14,6 +14,6 @@ size_t strings_getLength(const char* const string);
 
 char strings_toLower(char character);
 
-void strings_concatenate(char *storage, const char* const format, size_t formatLength, ...);
+void strings_concatenate(char *storage, const char* const format, ...);
 
 #endif  // AZ_UTILITIES_STRINGS_H

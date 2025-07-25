@@ -9,7 +9,7 @@
  * @license AGPLv3
  * This source code is under the GNU Affero General Public License. This program
  * can be repackaged and distributed freely, so long as its license is made
- * clearly available.
+ * clearly available and according to the terms of its license.
  */
 #ifndef COMPILER_H
 #define COMPILER_H

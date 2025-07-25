@@ -56,29 +56,31 @@ char strings_toLower(char character)
     return character > 0x40 && character < 0x5B ? character | 0x60 : character;
 }
 
-void strings_concatenate(char *storage, const char *const format,
-                         size_t formatLength, ...)
+void strings_concatenate(char *storage, const char *const format, ...)
 {
     va_list args;
-    va_start(args, formatLength);
+    va_start(args, format);
 
-    size_t inserted = 0;
-    for (size_t i = 0; i < formatLength; ++i)
+    char *formatPointer = (char *)format;
+    size_t index = 0;
+    while (*formatPointer != 0)
     {
-        if (format[i] != '$')
+        if (*formatPointer != '$')
         {
-            storage[i + inserted] = format[i];
+            storage[index] = *formatPointer;
+            index++;
+            formatPointer++;
             continue;
-        }
+        };
 
-        const char *const nextString = va_arg(args, const char *const);
-        size_t nextStringLength = va_arg(args, size_t);
-
-        for (size_t j = 0; j < nextStringLength; ++j)
+        char *nextString = va_arg(args, char *);
+        while (*nextString != 0)
         {
-            storage[i + inserted] = nextString[j];
-            inserted++;
+            storage[index] = *nextString;
+            index++;
+            nextString++;
         }
+        formatPointer++;
     }
 
     va_end(args);
