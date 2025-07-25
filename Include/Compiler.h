@@ -19,7 +19,6 @@
 #include <Types/Tokens.h>
 
 /**
- * @def COMPILER_ENTRY
  * @brief This defines what one would call the "main" function of any GLibC
  * application; command line arguments are moved into the place of the first and
  * second function arguments and as such provided to the compiler client. If you
@@ -31,6 +30,22 @@
           "%rsi\ncall main\nmovl %eax, %edi\nmovl $60, %eax\nsyscall");             \
     int main(int argc, const char *const *const argv)
 
+/**
+ * @brief This function retrieves and formats provided command-line arguments into
+ * something the client should use to tailor its execution. It does not retrieve the
+ * target, but since the target is always the last arguments clients are expected to
+ * grab it with `argv[argc - 1]`.
+ * @since v1.0.0.0
+ *
+ * @param[in] argc The count of arguments as taken from the command line.
+ * @param[in] argv The argument values as taken from the command line.
+ * @param[out] arguments The arguments formatted into their proper structure.
+ *
+ * @returns A boolean flag representing whether or not the compiler should continue
+ * execution. Note that this does not necessarily mean an error occurred, in the case
+ * of a "--help", "--version", or "--license" flag, this just simply means "quit
+ * trying to compile".
+ */
 bool compiler_getArguments(int argc, const char *const *const argv,
                            compiler_arguments_t *arguments);
 

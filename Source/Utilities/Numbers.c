@@ -1,29 +1,46 @@
 #include <Utilities/Numbers.h>
 
-size_t numbers_countDigits(size_t number) {
-    if (number >= 100000) {
-        if (number >= 10000000) {
-            if (number >= 1000000000) return 10;
-            if (number >= 100000000) return 9;
+size_t numbers_countDigits(size_t number)
+{
+    if (number >= 100000)
+    {
+        if (number >= 10000000)
+        {
+            if (number >= 1000000000)
+                return 10;
+            if (number >= 100000000)
+                return 9;
             return 8;
         }
-        if (number >= 1000000) return 7;
+        if (number >= 1000000)
+            return 7;
         return 6;
-    } else {
-        if (number >= 1000) {
-            if (number >= 10000) return 5;
+    }
+    else
+    {
+        if (number >= 1000)
+        {
+            if (number >= 10000)
+                return 5;
             return 4;
-        } else {
-            if (number >= 100) return 3;
-            if (number >= 10) return 2;
+        }
+        else
+        {
+            if (number >= 100)
+                return 3;
+            if (number >= 10)
+                return 2;
             return 1;
         }
     }
 }
 
-void numbers_toString(size_t number, size_t length, char* string) {
-    for (size_t i = 0; i < length; i++) {
-        switch (number % 10) {
+void numbers_toString(size_t number, size_t length, char *string)
+{
+    for (size_t i = 0; i < length; i++)
+    {
+        switch (number % 10)
+        {
             case 0:
                 string[length - i - 1] = '0';
                 break;
@@ -59,12 +76,15 @@ void numbers_toString(size_t number, size_t length, char* string) {
     }
 }
 
-void numbers_fromString(char* string, size_t length, size_t* number) {
+void numbers_fromString(char *string, size_t length, size_t *number)
+{
     size_t transformed = 0;
-    char* stringCopy = string;
+    char *stringCopy = string;
 
-    while (*stringCopy != 0 && transformed < length) {
-        switch (*stringCopy) {
+    while (*stringCopy != 0 && transformed < length)
+    {
+        switch (*stringCopy)
+        {
             case '0':
                 (*number) *= 10;
                 break;

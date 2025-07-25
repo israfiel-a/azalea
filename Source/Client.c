@@ -48,7 +48,7 @@ COMPILER_ENTRY
     const char *startupMessage =
         "\nAzalea CLI compiler v" VERSION_STRING
         "\nCopyright (c) 2025 Israfil Argos, "
-        "GPLv3\n<https://www.gnu.org/licenses/gpl-3.0.txt>\n";
+        "GPLv3\n<https://www.gnu.org/licenses/agpl-3.0.txt>\n";
     output_string(startupMessage, 113, true);
 
     output_string("CWD: ", 5, false);
