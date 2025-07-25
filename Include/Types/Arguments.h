@@ -3,7 +3,8 @@
 
 typedef enum compiler_backend
 {
-    NASM_BACKEND
+    NASM_BACKEND,
+    FASM_BACKEND
 } compiler_backend_t;
 #define COMPILER_BACKEND_LIST "NASM"
 
