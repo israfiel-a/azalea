@@ -4,7 +4,8 @@
 #define __need_size_t
 #include <stddef.h>
 
-typedef enum compiler_token_type {
+typedef enum compiler_token_type
+{
     UNKNOWN_TOKEN,
     IMPORT_TOKEN,
     ALIAS_TOKEN,
@@ -14,17 +15,18 @@ typedef enum compiler_token_type {
     TYPE_TOKEN,
     STRING_TOKEN,
     KNOWN_TOKEN,
-    ASTART_TOKEN,  // attribute
+    ASTART_TOKEN, // attribute
     AEND_TOKEN,
-    BSTART_TOKEN,  // block
+    BSTART_TOKEN, // block
     BEND_TOKEN,
-    SSTART_TOKEN,  // scope
+    SSTART_TOKEN, // scope
     SEND_TOKEN,
     EOS_TOKEN, // end of statement (';')
     EOF_TOKEN,
 } compiler_token_type_t;
 
-typedef struct compiler_token {
+typedef struct compiler_token
+{
     char *token;
     size_t length;
     compiler_token_type_t type;

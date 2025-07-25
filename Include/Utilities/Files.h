@@ -19,12 +19,11 @@
 
 #define FILES_CREATE 0x040
 
-int files_open(const char* const path, int flags, unsigned int permissions);
+int files_open(const char *const path, int flags, unsigned int permissions);
 void files_close(unsigned int descriptor);
 size_t files_size(unsigned int descriptor);
-bool files_read(unsigned int descriptor, size_t size, char* contents);
-void files_write(unsigned int descriptor, size_t size,
-                 const char* const contents);
-void files_getCWD(size_t size, char* cwd);
+bool files_read(unsigned int descriptor, size_t size, char *contents);
+void files_write(unsigned int descriptor, size_t size, const char *const contents);
+void files_getCWD(size_t size, char *cwd);
 
-#endif  // AZ_UTILITIES_FILES_H
+#endif // AZ_UTILITIES_FILES_H

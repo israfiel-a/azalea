@@ -4,12 +4,15 @@
 #include <Utilities/Output.h>
 #include <Utilities/Strings.h>
 
-static int interpretFile(const char *const path, size_t cwdLength, char *cwd) {
+static bool interpretFile(const char *const path, size_t cwdLength, char *cwd)
+{
     size_t pathLength = strings_getLength(path);
     char filePath[cwdLength + pathLength];
-    for (size_t i = 0; i < cwdLength; ++i) filePath[i] = cwd[i];
+    for (size_t i = 0; i < cwdLength; ++i)
+        filePath[i] = cwd[i];
     filePath[cwdLength - 1] = '/';
-    for (size_t i = 0; i < pathLength; ++i) filePath[i + cwdLength] = path[i];
+    for (size_t i = 0; i < pathLength; ++i)
+        filePath[i + cwdLength] = path[i];
     filePath[cwdLength + pathLength - 1] = 0;
 
     output_string("\nInterpreting file '", 20, false);
@@ -26,19 +29,22 @@ static int interpretFile(const char *const path, size_t cwdLength, char *cwd) {
     output_string(fileSizeString, fileSizeDigits, true);
 
     char contents[fileSize + 1];
-    if (!files_read(file, fileSize, contents)) {
+    if (!files_read(file, fileSize, contents))
+    {
         output_string("Failed to read file.", 20, true);
-        return -1;
+        return false;
     }
     files_close(file);
     output_string("Read file into memory.\n", 23, true);
 
     compiler_ast_node_t *head;
-    compiler_generateAST(contents, &head);
-    return 0;
+    if (!compiler_generateAST(contents, &head))
+        return false;
+    return compiler_interpretUnit(head);
 }
 
-COMPILER_ENTRY {
+COMPILER_ENTRY
+{
     const char *startupMessage =
         "\nAzalea CLI compiler v" VERSION_STRING
         "\nCopyright (c) 2025 Israfil Argos, "
@@ -51,8 +57,9 @@ COMPILER_ENTRY {
     size_t cwdLength = strings_getLength(cwd);
     output_string(cwd, cwdLength, true);
 
-    compiler_arguments_t arguments = {0};
-    if (!compiler_arguments(argc, argv, &arguments)) return -1;
+    compiler_arguments_t arguments = {.target = argv[argc - 1]};
+    if (!compiler_getArguments(argc, argv, &arguments))
+        return -1;
     if (arguments.flags.interpreted)
         return interpretFile(arguments.target, cwdLength, cwd);
 }

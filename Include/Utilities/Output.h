@@ -4,6 +4,6 @@
 #define __need_size_t
 #include <stddef.h>
 
-void output_string(const char* const string, size_t size, bool newline);
+void output_string(const char *const string, size_t size, bool newline);
 
 #endif // AZ_UTILITIES_OUTPUT_H

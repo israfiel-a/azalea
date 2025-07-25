@@ -9,7 +9,8 @@
 // probably will be an issue later--but 4kb? that sounds like a lot to me :3
 #define COMPILER_AST_ARENA_SIZE 4096
 
-typedef enum compiler_ast_operation {
+typedef enum compiler_ast_operation
+{
     UNKNOWN_OPERATION,
     FILE_ATTRIBUTE_OPERATION,
     IMPORT_OPERATION,
@@ -17,7 +18,8 @@ typedef enum compiler_ast_operation {
     TYPE_DECLARATION_OPERATION
 } compiler_ast_operation_t;
 
-typedef enum compiler_ast_file_attribute_type {
+typedef enum compiler_ast_file_attribute_type
+{
     UNKNOWN_FILE_ATTRIBUTE,
     STATICSTD_FILE_ATTRIBUTE,
     BUILDFILE_FILE_ATTRIBUTE,
@@ -25,37 +27,47 @@ typedef enum compiler_ast_file_attribute_type {
     INTERFACE_FILE_ATTRIBUTE
 } compiler_ast_file_attribute_type_t;
 
-typedef struct compiler_ast_node {
+typedef struct compiler_ast_node
+{
     compiler_ast_operation_t operation;
-    union {
-        struct {
-            char* raw;
+    union
+    {
+        struct
+        {
+            char *raw;
         } unknown;
-        struct {
+        struct
+        {
             compiler_ast_file_attribute_type_t attribute;
-            union {
-                struct {
-                    char* name;
+            union
+            {
+                struct
+                {
+                    char *name;
                 } interface;
             } arguments;
         } fileAttribute;
-        struct {
-            char* interface;
-            char* alias;
+        struct
+        {
+            char *interface;
+            char *alias;
             size_t interfaceLength;
             size_t aliasLength;
         } import;
-        struct {
-            char* name;
+        struct
+        {
+            char *name;
             size_t nameLength;
             size_t parameterCount;
-            struct {
+            struct
+            {
                 struct compiler_ast_node *type;
-                char* name;
+                char *name;
             } parameters[COMPILER_MAX_FUNCTION_PARAMETERS];
         } functionDeclaration;
-        struct {
-            char* name;
+        struct
+        {
+            char *name;
             size_t nameLength;
             size_t resolved;
         } typeDeclaration;
@@ -64,4 +76,4 @@ typedef struct compiler_ast_node {
     struct compiler_ast_node *up, *left, *right;
 } compiler_ast_node_t;
 
-#endif  // AZ_COMPILER_TYPES_AST_H
+#endif // AZ_COMPILER_TYPES_AST_H
