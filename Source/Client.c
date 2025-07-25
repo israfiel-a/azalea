@@ -12,7 +12,7 @@ static int interpretFile(const char *const path, size_t cwdLength, char *cwd) {
     for (size_t i = 0; i < pathLength; ++i) filePath[i + cwdLength] = path[i];
     filePath[cwdLength + pathLength - 1] = 0;
 
-    output_string("\nInterpreting file '", 19, false);
+    output_string("\nInterpreting file '", 20, false);
     output_string(filePath, cwdLength + pathLength - 1, false);
     output_string("'.", 2, true);
 

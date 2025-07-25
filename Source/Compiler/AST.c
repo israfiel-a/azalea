@@ -31,6 +31,8 @@ static compiler_ast_file_attribute_type_t getFileAttribute(
         return NOIMPLEMENTATION_FILE_ATTRIBUTE;
     else if (strings_compareN(attribute, "interface", length - 1))
         return INTERFACE_FILE_ATTRIBUTE;
+    else if (strings_compareN(attribute, "buildfile", length - 1))
+        return BUILDFILE_FILE_ATTRIBUTE;
 
     output_string("Found unknown attribute '", 25, false);
     output_string(attribute, length, false);
@@ -66,10 +68,10 @@ static compiler_ast_node_t *resolveTypename(const char *const name,
                     if (cursors[cursorCount] != nullptr) cursorCount++;
                 } else {
                     cursors[i] = cursors[i]->right;
-                    if(cursors[i] == nullptr) cursorCount--;
+                    if (cursors[i] == nullptr) cursorCount--;
                 }
             }
-            if(newCursors == 0) cursorCount--;
+            if (newCursors == 0) cursorCount--;
         }
     }
 

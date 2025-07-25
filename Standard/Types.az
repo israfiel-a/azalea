@@ -12,7 +12,7 @@
 <noimplementation>
 
 // The integrals are as follows:
-// uint8_t, uint16_t, uint32_t, uin64_t + signed variants
+// uint8_t, uint16_t, uint32_t, uint64_t + signed variants
 // generic_t ??? think about how to implement this
 
 type uint8_t char_t;

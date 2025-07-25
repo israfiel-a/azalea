@@ -33,7 +33,7 @@ bool compiler_arguments(int argc, char **argv,
             return false;
         } else if (strings_compare(currentArg, "--backend"))
             pollType = 1;
-        else if(strings_compare(currentArg, "--interpreted"))
+        else if (strings_compare(currentArg, "--interpreted"))
             arguments->flags.interpreted = true;
     }
 

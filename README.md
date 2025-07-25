@@ -1,3 +1,5 @@
+![top_banner](https://raw.githubusercontent.com/israfiel-a/israfiel-a/main/azalea-banner.jpg)
+
 ----------
 
 ### Azalealang
@@ -44,8 +46,12 @@ Azalea is versioned in a `major.minor.patch.tweak` system. Each "tweak" is a com
 
 #### Roadmap
 - [x] Loader
-- [ ] Tokenizer
+- [x] Tokenizer
+- [ ] Generator
 - [ ] Analyzer
+- [ ] Interpreter
 - [ ] Compiler
 
 ----------
+
+![top_banner](https://raw.githubusercontent.com/israfiel-a/israfiel-a/main/azalea-banner.jpg)

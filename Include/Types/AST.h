@@ -20,6 +20,7 @@ typedef enum compiler_ast_operation {
 typedef enum compiler_ast_file_attribute_type {
     UNKNOWN_FILE_ATTRIBUTE,
     STATICSTD_FILE_ATTRIBUTE,
+    BUILDFILE_FILE_ATTRIBUTE,
     NOIMPLEMENTATION_FILE_ATTRIBUTE,
     INTERFACE_FILE_ATTRIBUTE
 } compiler_ast_file_attribute_type_t;

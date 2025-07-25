@@ -17,6 +17,7 @@ static void removeEmptyTokens(char** contents) {
 
 void compiler_getToken(char** contents, compiler_token_t* token) {
     stripWhitespace(contents);
+    removeEmptyTokens(contents);
     // Remove comments.
     while (**contents == '/' && *(*contents + 1) == '/') {
         while (**contents != '\n' && **contents != 0) (*contents)++;
