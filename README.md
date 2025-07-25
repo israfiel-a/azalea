@@ -15,7 +15,7 @@ Azalea is not fast, and I figure it's only pretty to me. It's more or less a toy
 ----------
 
 #### Compatibility
-Azalea will only ever have targets for the [x86_64 architecture](https://en.wikipedia.org/wiki/X86-64), that's its usecase. It compiles directly to x86_64 assemblies of different varieties (NASM, FASM, etc.). A list of the targets that are (planned) is below.
+Azalea will only ever have targets for the [x86_64 architecture](https://en.wikipedia.org/wiki/X86-64)&mdash;that's its use case. It compiles directly to x86_64 assemblies of different varieties (NASM, FASM, etc.). A list of the targets that are (planned) is below.
 
 - [ ] [Linux](https://en.wikipedia.org/wiki/Linux):
   - [ ] [NASM](https://en.wikipedia.org/wiki/Netwide_Assembler): **In progress.**
@@ -26,7 +26,7 @@ Azalea will only ever have targets for the [x86_64 architecture](https://en.wiki
 ----------
 
 #### Compilation
-You can compile Azalea via the [CMake](https://en.wikipedia.org/wiki/CMake) build system. You can build the Azalea compiler interface as either a [shared](https://en.wikipedia.org/wiki/Shared_library) or [static](https://en.wikipedia.org/wiki/Static_library) library to link to your own compiler implementations (if, for some reaosn, you wish to create a compiler for this monstrous language).
+You can compile Azalea via the [CMake](https://en.wikipedia.org/wiki/CMake) build system. You can build the Azalea compiler interface as either a [shared](https://en.wikipedia.org/wiki/Shared_library) or [static](https://en.wikipedia.org/wiki/Static_library) library to link to your own compiler implementations (if, for some reason, you wish to create a compiler for this monstrous language).
 
 ```bash
 BUILD_TYPE=Release
