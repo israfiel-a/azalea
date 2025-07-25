@@ -20,7 +20,7 @@ Azalea will only ever have targets for the [x86_64 architecture](https://en.wiki
 - [ ] [Linux](https://en.wikipedia.org/wiki/Linux):
   - [ ] [NASM](https://en.wikipedia.org/wiki/Netwide_Assembler): **In progress.**
   - [ ] [FASM](https://en.wikipedia.org/wiki/FASM): **On the roadmap.**
-- [ ] [Cobalt](https://github.com/israfiel-a/cobalt): **In progress.**
+- [ ] [Cobalt](https://github.com/israfiel-a/cobalt): **On the roadmap.**
 - [ ] [BSD](https://en.wikipedia.org/wiki/Berkeley_Software_Distribution): **On the roadmap.**
 
 ----------
