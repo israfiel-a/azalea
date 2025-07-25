@@ -3,7 +3,7 @@
 ----------
 
 ### Azalealang
-![lines of code badge](https://img.shields.io/endpoint?url=https://ghloc.vercel.app/api/israfiel-a/azalea/badge?filter=.az$,.c$,.h$,.txt$&style=flat&color=blue&label=Lines%20of%20Code)
+![lines of code badge](https://img.shields.io/endpoint?url=https://ghloc.vercel.app/api/israfiel-a/azalea/badge?format=human&style=flat&color=blue&label=Lines%20of%20Code)
 
 This is a small, [C-like](https://en.wikipedia.org/wiki/List_of_C-family_programming_languages), [low-level language](https://en.wikipedia.org/wiki/Low-level_programming_language) built specifically for the development of the [Cobalt operating system](https://github.com/israfiel-a/cobalt). This language is not and probably never will be fit for general usage, it's tailored exactly to my needs and my programming style. The compiler is also mostly implemented in [inline assembly](https://en.wikipedia.org/wiki/Inline_assembler), entirely without the [C standard library](https://en.wikipedia.org/wiki/C_standard_library), because why not.
 
