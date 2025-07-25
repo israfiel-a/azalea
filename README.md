@@ -3,7 +3,11 @@
 ----------
 
 ### Azalealang
+![lines of code badge](https://img.shields.io/endpoint?url=https://ghloc.vercel.app/api/israfiel-a/azalea/badge?filter=.az$,.c$,.h$&style=flat&color=blue&label=Lines%20of%20Code)
+
 This is a small, [C-like](https://en.wikipedia.org/wiki/List_of_C-family_programming_languages), [low-level language](https://en.wikipedia.org/wiki/Low-level_programming_language) built specifically for the development of the [Cobalt operating system](https://github.com/israfiel-a/cobalt). This language is not and probably never will be fit for general usage, it's tailored exactly to my needs and my programming style. The compiler is also mostly implemented in [inline assembly](https://en.wikipedia.org/wiki/Inline_assembler), entirely without the [C standard library](https://en.wikipedia.org/wiki/C_standard_library), because why not.
+
+Azalea is not fast, and I figure it's only pretty to me. It's more or less a toy language. But I still love it, and I would greatly appreciate if you tried it out, or at least took a look at it. Let me know what you think!
 
 > [!WARNING]
 > This language, and its compiler, are under **very** early development. Changes, especially breaking changes, should be expected, and should be expected to be frequent.
@@ -13,11 +17,11 @@ This is a small, [C-like](https://en.wikipedia.org/wiki/List_of_C-family_program
 #### Compatibility
 Azalea will only ever have targets for the [x86_64 architecture](https://en.wikipedia.org/wiki/X86-64), that's its usecase. It compiles directly to x86_64 assemblies of different varieties (NASM, FASM, etc.). A list of the targets that are (planned) is below.
 
-- [Linux](https://en.wikipedia.org/wiki/Linux):
-  - [NASM](https://en.wikipedia.org/wiki/Netwide_Assembler): **In progres.**
-  - [FASM](https://en.wikipedia.org/wiki/FASM): **On the roadmap.**
-- [Cobalt](https://github.com/israfiel-a/cobalt): **In progress.**
-- [BSD](https://en.wikipedia.org/wiki/Berkeley_Software_Distribution): **On the roadmap.**
+- [ ] [Linux](https://en.wikipedia.org/wiki/Linux):
+  - [ ] [NASM](https://en.wikipedia.org/wiki/Netwide_Assembler): **In progress.**
+  - [ ] [FASM](https://en.wikipedia.org/wiki/FASM): **On the roadmap.**
+- [ ] [Cobalt](https://github.com/israfiel-a/cobalt): **In progress.**
+- [ ] [BSD](https://en.wikipedia.org/wiki/Berkeley_Software_Distribution): **On the roadmap.**
 
 ----------
 
