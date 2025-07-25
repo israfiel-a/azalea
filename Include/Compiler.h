@@ -11,8 +11,8 @@
  * can be repackaged and distributed freely, so long as its license is made
  * clearly available and according to the terms of its license.
  */
-#ifndef COMPILER_H
-#define COMPILER_H
+#ifndef AZ_COMPILER_H
+#define AZ_COMPILER_H
 
 #include <Types/AST.h>
 #include <Types/Arguments.h>
@@ -55,4 +55,4 @@ bool compiler_generateAST(const char *const contents, compiler_ast_node_t **head
 
 bool compiler_interpretUnit(const compiler_ast_node_t *const head);
 
-#endif // COMPILER_H
+#endif // AZ_COMPILER_H

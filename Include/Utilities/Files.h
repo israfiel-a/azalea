@@ -7,8 +7,8 @@
  * @copyright (c) 2025 - the Azalea Project
  * @license AGPLv3
  */
-#ifndef AZ_UTILITIES_FILES_H
-#define AZ_UTILITIES_FILES_H
+#ifndef AZ_COMPILER_UTILITIES_FILES_H
+#define AZ_COMPILER_UTILITIES_FILES_H
 
 #define __need_size_t
 #include <stddef.h>
@@ -26,4 +26,4 @@ bool files_read(unsigned int descriptor, size_t size, char *contents);
 void files_write(unsigned int descriptor, size_t size, const char *const contents);
 void files_getCWD(size_t size, char *cwd);
 
-#endif // AZ_UTILITIES_FILES_H
+#endif // AZ_COMPILER_UTILITIES_FILES_H 

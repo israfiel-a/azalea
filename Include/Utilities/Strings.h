@@ -1,5 +1,5 @@
-#ifndef AZ_UTILITIES_STRINGS_H
-#define AZ_UTILITIES_STRINGS_H
+#ifndef AZ_COMPILER_UTILITIES_STRINGS_H
+#define AZ_COMPILER_UTILITIES_STRINGS_H
 
 #define __need_size_t
 #include <stddef.h>
@@ -16,4 +16,4 @@ char strings_toLower(char character);
 
 void strings_concatenate(char *storage, const char* const format, ...);
 
-#endif  // AZ_UTILITIES_STRINGS_H
+#endif  // AZ_COMPILER_UTILITIES_STRINGS_H
