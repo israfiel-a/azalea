@@ -10,13 +10,13 @@
 
 // Link the standard library statically; this only links the imported modules. The produced
 // executable will not have any dependencies besides those explicitly requested.
-<staticstd>
+[staticstd];
 
 import std::types;
 import std::print;
 
+[entrypoint(bare)]; // "Wrapped" provides a wrapper function that grabs CMD args. "Bare" does not.
 function status_code_t entry = SUCCESS
-    <entrypoint(bare)> // "Wrapped" provides a wrapper function that grabs CMD args. "Bare" does not.
 {
     std::print("Hello, world!");
 }

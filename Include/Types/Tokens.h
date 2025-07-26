@@ -15,9 +15,12 @@ typedef enum compiler_token_type
     ENUMERATOR_TOKEN,
     STRUCTURE_TOKEN,
     TYPE_TOKEN,
-    STRING_TOKEN,
-    HEX_TOKEN,
-    DECIMAL_TOKEN,
+    STBEGIN_TOKEN,   // string
+    STLITERAL_TOKEN, // string
+    STEND_TOKEN,
+    HLITERAL_TOKEN, // lex
+    DLITEAL_TOKEN,  // decimal
+    FLITERAL_TOKEN, // float
     EQUALS_TOKEN,
     TID_TOKEN, // type id
     ID_TOKEN,
