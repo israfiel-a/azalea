@@ -45,8 +45,12 @@ static bool interpretFile(const char *const path, size_t cwdLength, char *cwd)
 
 COMPILER_ENTRY
 {
+    compiler_arguments_t arguments = {.target = argv[argc - 1]};
+    if (!compiler_getArguments(argc, argv, &arguments))
+        return -1;
+
     const char *startupMessage =
-        "\nAzalea CLI compiler v" VERSION_STRING
+        "Azalea CLI compiler v" VERSION_STRING
         "\nCopyright (c) 2025 Israfil Argos, "
         "GPLv3\n<https://www.gnu.org/licenses/agpl-3.0.txt>\n";
     output_string(startupMessage, 113, true);
@@ -57,9 +61,6 @@ COMPILER_ENTRY
     size_t cwdLength = strings_getLength(cwd);
     output_string(cwd, cwdLength, true);
 
-    compiler_arguments_t arguments = {.target = argv[argc - 1]};
-    if (!compiler_getArguments(argc, argv, &arguments))
-        return -1;
     if (arguments.flags.interpreted)
         return interpretFile(arguments.target, cwdLength, cwd);
 }

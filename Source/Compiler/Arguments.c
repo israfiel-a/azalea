@@ -40,9 +40,9 @@
  * @since v1.0.0.0
  */
 #define LICENSE_NOTICE                                                              \
-    "This source code is under the GNU Affero General Public License version 3.0. " \
-    "It can be repackaged, redistributed, and modified according to the terms of "  \
-    "the license. The AGPL can be found at "                                        \
+    "This application is under the GNU Affero General Public License version 3.0. " \
+    "\nIt can be repackaged, redistributed, and modified according to the terms "   \
+    "of the license. \nThe AGPL can be found at "                                   \
     "<https://www.gnu.org/licenses/agpl-3.0.md>.\n\n"
 
 /**
@@ -128,7 +128,8 @@ bool compiler_getArguments(int argc, const char *const *const argv,
         {
             size_t messageLength = 39 + strings_getLength(currentArg);
             char message[messageLength];
-            strings_concatenate(message, "Got unknown command line argument '$'.\n\n", currentArg);
+            strings_concatenate(
+                message, "Got unknown command line argument '$'.\n\n", currentArg);
             output_string(message, messageLength, false);
             return false;
         }
