@@ -4,7 +4,7 @@ import std::build;
 import std::types;
 
 // In a buildfile, the "entry" function is given a different kind of argument when wrapped, a buildinfo structure used to compile the project. 
-[entrypoint(wrapped)]
+[entrypoint(wrapped)];
 function status_code_t entry(std::build_info_t *info) = SUCCESS
 {
     info->outputType = FILE;

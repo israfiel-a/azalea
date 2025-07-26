@@ -24,7 +24,14 @@ typedef enum compiler_token_type
     EQUALS_TOKEN,
     TID_TOKEN, // type id
     ID_TOKEN,
+    PLUS_TOKEN,
+    MINUS_TOKEN,
+    INCREMENT_TOKEN,
+    DECREMENT_TOKEN,
+    VARIADIC_TOKEN,
+    NEQUAL_TOKEN,
     COMMA_TOKEN,
+    WHILE_TOKEN,
     VALUE_TOKEN, // a general value (not literal or string but must be value
                  // semantically); must be resolved by the AST generator (usually
                  // enum members)
@@ -35,6 +42,7 @@ typedef enum compiler_token_type
     BSTART_TOKEN, // block
     BEND_TOKEN,
     SSTART_TOKEN, // scope
+    SNARROW_TOKEN, // scope narrow (::)
     SEND_TOKEN,
     EOS_TOKEN, // end of statement (';')
     EOF_TOKEN,

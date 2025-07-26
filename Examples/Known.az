@@ -9,7 +9,7 @@ known {
         counter++;
 }
 
-[entrypoint(bare)]
+[entrypoint(bare)];
 function status_code_t entry = SUCCESS
 {
     std::print("%u8\n": counter); 

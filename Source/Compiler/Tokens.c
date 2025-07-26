@@ -14,7 +14,8 @@ static compiler_token_type_t lastToken = UNKNOWN_TOKEN;
     (character != '{' && character != '(' && character != '[' && character != '"')
 #define NOT_BLOCK_END(character)                                                    \
     (character != '}' && character != ')' && character != ']' &&                    \
-     character != ';' && character != ',')
+     character != ';' && character != ',' && character != '+' &&                    \
+     character != '-' && character != ':')
 
 static void stripWhitespace(char **contents)
 {
@@ -48,6 +49,10 @@ static compiler_token_type_t resolveToken(const char *const token, size_t length
             if (lastToken == STBEGIN_TOKEN || lastToken == STLITERAL_TOKEN)
                 return STEND_TOKEN;
             return STBEGIN_TOKEN;
+        case ':':
+            if (*(token + 1) == ':')
+                return SNARROW_TOKEN;
+            return VARIADIC_TOKEN;
         case '(':
             return SSTART_TOKEN;
         case ')':
@@ -64,10 +69,42 @@ static compiler_token_type_t resolveToken(const char *const token, size_t length
             return EQUALS_TOKEN;
         case ',':
             return COMMA_TOKEN;
+        case '+':
+            // these are both...distasteful
+            if (*(token + 1) == '+')
+                return INCREMENT_TOKEN;
+            return PLUS_TOKEN;
+        case '-':
+            if (*(token + 1) == '-')
+                return DECREMENT_TOKEN;
+            return MINUS_TOKEN;
+        case '0':
+            // yucky
+            if (*(token + 1) == 'x')
+                return HLITERAL_TOKEN;
+            [[fallthrough]];
+        case '1':
+            [[fallthrough]];
+        case '2':
+            [[fallthrough]];
+        case '4':
+            [[fallthrough]];
+        case '5':
+            [[fallthrough]];
+        case '6':
+            [[fallthrough]];
+        case '7':
+            [[fallthrough]];
+        case '8':
+            [[fallthrough]];
+        case '9':
+            return DLITEAL_TOKEN;
     }
 
     if (*token == 'a' && *(token + 1) == 's')
         return ALIAS_TOKEN;
+    else if (*token == '!' && *(token + 1) == '=')
+        return NEQUAL_TOKEN;
     else if (strings_compareN(token, "import", length - 1))
         return IMPORT_TOKEN;
     else if (strings_compareN(token, "function", length - 1))
@@ -80,6 +117,8 @@ static compiler_token_type_t resolveToken(const char *const token, size_t length
         return TYPE_TOKEN;
     else if (strings_compareN(token, "known", length - 1))
         return KNOWN_TOKEN;
+    else if (strings_compareN(token, "while", length - 1))
+        return WHILE_TOKEN;
 
     switch (lastToken)
     {
@@ -92,12 +131,19 @@ static compiler_token_type_t resolveToken(const char *const token, size_t length
         case EQUALS_TOKEN:
             [[fallthrough]];
         case SSTART_TOKEN:
+            [[fallthrough]];
+        case VARIADIC_TOKEN:
             return VALUE_TOKEN;
         case TID_TOKEN:
             return ID_TOKEN;
         default:
+            if ((*(token + length) == ':' && *(token + length + 1) == ':') ||
+                (lastToken == SNARROW_TOKEN && *(token + length) == ';'))
+                return IID_TOKEN;
             // this is a gross hack T-T
-            if (*(token + length) == '(')
+            if (*(token + length) == '(' ||
+                (*(token + length) == '+' && *(token + length + 1) == '+') ||
+                (*(token + length) == '-' && *(token + length + 1) == '-'))
                 return ID_TOKEN;
             return TID_TOKEN;
     }
@@ -115,7 +161,8 @@ static bool validateToken(compiler_token_type_t current)
                 valid = true;
             break;
         case ASTART_TOKEN:
-            if (lastToken == UNKNOWN_TOKEN || lastToken == EOS_TOKEN)
+            if (lastToken == UNKNOWN_TOKEN || lastToken == EOS_TOKEN ||
+                lastToken == BEND_TOKEN)
                 valid = true;
             break;
         case AEND_TOKEN:
@@ -145,24 +192,37 @@ static bool validateToken(compiler_token_type_t current)
             break;
         case ID_TOKEN:
             if (lastToken == TID_TOKEN || lastToken == EOS_TOKEN ||
-                lastToken == BSTART_TOKEN)
+                lastToken == BSTART_TOKEN || lastToken == SEND_TOKEN ||
+                lastToken == SNARROW_TOKEN)
                 valid = true;
             break;
         case EQUALS_TOKEN:
             if (lastToken == ID_TOKEN)
                 valid = true;
             break;
+        case NEQUAL_TOKEN:
+            if (lastToken == VALUE_TOKEN)
+                valid = true;
+            break;
         case VALUE_TOKEN:
-            if (lastToken == EQUALS_TOKEN || lastToken == SSTART_TOKEN)
+            if (lastToken == EQUALS_TOKEN || lastToken == SSTART_TOKEN ||
+                lastToken == VARIADIC_TOKEN)
                 valid = true;
             break;
         case SSTART_TOKEN:
-            if (lastToken == AID_TOKEN || lastToken == ID_TOKEN)
+            if (lastToken == AID_TOKEN || lastToken == ID_TOKEN ||
+                lastToken == WHILE_TOKEN)
+                valid = true;
+            break;
+        case VARIADIC_TOKEN:
+            if (lastToken == STEND_TOKEN || lastToken == VALUE_TOKEN ||
+                lastToken == HLITERAL_TOKEN || lastToken == DLITEAL_TOKEN)
                 valid = true;
             break;
         case SEND_TOKEN:
             if (lastToken == SSTART_TOKEN || lastToken == VALUE_TOKEN ||
-                lastToken == STEND_TOKEN)
+                lastToken == STEND_TOKEN || lastToken == HLITERAL_TOKEN ||
+                lastToken == DLITEAL_TOKEN)
                 valid = true;
             break;
         case BSTART_TOKEN:
@@ -177,6 +237,29 @@ static bool validateToken(compiler_token_type_t current)
         case STBEGIN_TOKEN:
             if (lastToken == EQUALS_TOKEN || lastToken == SSTART_TOKEN ||
                 lastToken == COMMA_TOKEN)
+                valid = true;
+            break;
+        case INCREMENT_TOKEN:
+            [[fallthrough]];
+        case DECREMENT_TOKEN:
+            if (lastToken == ID_TOKEN)
+                valid = true;
+            break;
+        case WHILE_TOKEN:
+            if (lastToken == EOS_TOKEN || lastToken == BSTART_TOKEN)
+                valid = true;
+            break;
+        case HLITERAL_TOKEN:
+            [[fallthrough]];
+        case DLITEAL_TOKEN:
+            // we seriously need to improve this system, what happens if i add more
+            // binops and forget to add them to this list???
+            if (lastToken == EQUALS_TOKEN || lastToken == SSTART_TOKEN ||
+                lastToken == NEQUAL_TOKEN)
+                valid = true;
+            break;
+        case SNARROW_TOKEN:
+            if (lastToken == IID_TOKEN)
                 valid = true;
             break;
         case STEND_TOKEN:
@@ -253,6 +336,14 @@ bool compiler_getToken(char **contents, compiler_token_t *token)
     token->type = resolveToken(token->token, token->length);
     if (token->type == UNKNOWN_TOKEN)
         return false;
+
+    // find a way to remove this
+    if (token->type == INCREMENT_TOKEN || token->type == DECREMENT_TOKEN ||
+        token->type == SNARROW_TOKEN)
+    {
+        token->length++;
+        (*contents)++;
+    }
 
     bool valid = validateToken(token->type);
     column += token->length;
