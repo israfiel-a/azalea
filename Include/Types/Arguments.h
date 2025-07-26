@@ -13,17 +13,58 @@
 #ifndef AZ_COMPILER_TYPES_ARGUMENTS_H
 #define AZ_COMPILER_TYPES_ARGUMENTS_H
 
+/**
+ * @brief The structure containing the configuration arguments given to the
+ * compiler.
+ * @since v1.0.0.0
+ */
 typedef struct compiler_arguments
 {
     struct
     {
+        /**
+         * @brief A flag representing whether or not the compiler is to interpret the
+         * given target or compile it.
+         * @since v1.0.0.0
+         */
         bool interpreted : 1;
-    } flags;
+    }
+    /**
+     * @brief A container for simple boolean flags used to tweak certain
+     * black-and-white behaviors in the compiler.
+     * @since v1.0.0.0
+     */
+    flags;
+
     enum
     {
+        /**
+         * @brief The Netwide Assembler backend.
+         * @since v1.0.0.0
+         *
+         * @see https://www.nasm.us
+         */
         NASM_BACKEND,
+        /**
+         * @brief The flat assembler [sic] backend.
+         * @since v1.0.0.0
+         *
+         * @see https://flatassembler.net
+         */
         FASM_BACKEND
-    } backend;
+    }
+    /**
+     * @brief An enumerator describing which backend has been specified for use in
+     * the compiler.
+     * @since v1.0.0.0
+     */
+    backend;
+
+    /**
+     * @brief The compiler's target. This can be a file or a directory, depending on
+     * the context (interpreted, etc). 
+     * @since v1.0.0.0
+     */
     const char *const target;
 } compiler_arguments_t;
 
