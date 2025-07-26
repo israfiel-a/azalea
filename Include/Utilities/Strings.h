@@ -16,4 +16,6 @@ char strings_toLower(char character);
 
 void strings_concatenate(char *storage, const char* const format, ...);
 
+void strings_concatenateN(char *storage, const char *const format, ...);
+
 #endif  // AZ_COMPILER_UTILITIES_STRINGS_H

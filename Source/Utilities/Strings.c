@@ -1,5 +1,6 @@
 #include <Utilities/Strings.h>
 #include <stdarg.h>
+#include <stddef.h>
 
 bool strings_compare(const char *const a, const char *const b)
 {
@@ -75,6 +76,37 @@ void strings_concatenate(char *storage, const char *const format, ...)
 
         char *nextString = va_arg(args, char *);
         while (*nextString != 0)
+        {
+            storage[index] = *nextString;
+            index++;
+            nextString++;
+        }
+        formatPointer++;
+    }
+
+    va_end(args);
+}
+
+void strings_concatenateN(char *storage, const char *const format, ...)
+{
+    va_list args;
+    va_start(args, format);
+
+    char *formatPointer = (char *)format;
+    size_t index = 0;
+    while (*formatPointer != 0)
+    {
+        if (*formatPointer != '$')
+        {
+            storage[index] = *formatPointer;
+            index++;
+            formatPointer++;
+            continue;
+        };
+
+        char *nextString = va_arg(args, char *);
+        size_t nextStringLength = va_arg(args, size_t);
+        for(size_t i = 0; i < nextStringLength; ++i)
         {
             storage[index] = *nextString;
             index++;

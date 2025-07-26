@@ -126,7 +126,7 @@ bool compiler_getArguments(int argc, const char *const *const argv,
             arguments->flags.interpreted = true;
         else
         {
-            size_t messageLength = 39 + strings_getLength(currentArg);
+            size_t messageLength = 38 + strings_getLength(currentArg);
             char message[messageLength];
             strings_concatenate(
                 message, "Got unknown command line argument '$'.\n\n", currentArg);

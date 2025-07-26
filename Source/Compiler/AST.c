@@ -105,7 +105,7 @@ bool compiler_generateAST(const char *const contents, compiler_ast_node_t **head
 
     char *contentsPointer = (char *)contents;
     compiler_token_t token = {0};
-    compiler_getToken(&contentsPointer, &token);
+    if(!compiler_getToken(&contentsPointer, &token)) return false;
 
     size_t scope = 0;
 
@@ -194,7 +194,7 @@ bool compiler_generateAST(const char *const contents, compiler_ast_node_t **head
                 break; // TEMP!!!!!
         }
 
-        compiler_getToken(&contentsPointer, &token);
+        if(!compiler_getToken(&contentsPointer, &token)) return false;
     }
     return true;
 }

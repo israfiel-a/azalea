@@ -8,14 +8,26 @@ typedef enum compiler_token_type
 {
     UNKNOWN_TOKEN,
     IMPORT_TOKEN,
+    IID_TOKEN, // import id
     ALIAS_TOKEN,
+    ANAME_TOKEN, // alias name
     FUNCTION_TOKEN,
     ENUMERATOR_TOKEN,
     STRUCTURE_TOKEN,
     TYPE_TOKEN,
     STRING_TOKEN,
+    HEX_TOKEN,
+    DECIMAL_TOKEN,
+    EQUALS_TOKEN,
+    TID_TOKEN, // type id
+    ID_TOKEN,
+    COMMA_TOKEN,
+    VALUE_TOKEN, // a general value (not literal or string but must be value
+                 // semantically); must be resolved by the AST generator (usually
+                 // enum members)
     KNOWN_TOKEN,
     ASTART_TOKEN, // attribute
+    AID_TOKEN,    // attribute id
     AEND_TOKEN,
     BSTART_TOKEN, // block
     BEND_TOKEN,
