@@ -1,4 +1,4 @@
-<staticstd>
+[staticstd];
 
 import std::types;
 
@@ -9,8 +9,8 @@ known {
         counter++;
 }
 
+[entrypoint(bare)]
 function status_code_t entry = SUCCESS
-    <entrypoint(bare)> 
 {
     std::print("%u8\n": counter); 
 }

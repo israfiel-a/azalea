@@ -93,8 +93,13 @@ static compiler_token_type_t resolveToken(const char *const token, size_t length
             [[fallthrough]];
         case SSTART_TOKEN:
             return VALUE_TOKEN;
-        default:
+        case TID_TOKEN:
             return ID_TOKEN;
+        default:
+            // this is a gross hack T-T
+            if (*(token + length) == '(')
+                return ID_TOKEN;
+            return TID_TOKEN;
     }
 }
 
@@ -130,7 +135,12 @@ static bool validateToken(compiler_token_type_t current)
                 valid = true;
             break;
         case TID_TOKEN:
-            if (lastToken == FUNCTION_TOKEN || lastToken == TYPE_TOKEN)
+            if (lastToken == FUNCTION_TOKEN || lastToken == TYPE_TOKEN ||
+                lastToken == EOS_TOKEN)
+                valid = true;
+            break;
+        case KNOWN_TOKEN:
+            if (lastToken == EOS_TOKEN)
                 valid = true;
             break;
         case ID_TOKEN:
@@ -157,7 +167,7 @@ static bool validateToken(compiler_token_type_t current)
             break;
         case BSTART_TOKEN:
             if (lastToken == VALUE_TOKEN || lastToken == ID_TOKEN ||
-                lastToken == SEND_TOKEN)
+                lastToken == SEND_TOKEN || lastToken == KNOWN_TOKEN)
                 valid = true;
             break;
         case BEND_TOKEN:
